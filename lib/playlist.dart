@@ -11,6 +11,6 @@ class _PlaylistState extends State<Playlist> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () => {print('111')}, icon: const Icon(Icons.queue_music));
+        onPressed: () => {}, icon: const Icon(Icons.queue_music));
   }
 }

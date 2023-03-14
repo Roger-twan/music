@@ -13,16 +13,16 @@ class _PlayControllerState extends State<PlayController> {
     return Row(
       children: [
         IconButton(
-            onPressed: () => {print('previous')},
+            onPressed: () => {},
             icon: const Icon(Icons.skip_previous)),
         IconButton(
-            onPressed: () => {print('play')},
+            onPressed: () => {},
             icon: const Icon(Icons.play_arrow),
             iconSize: 40,
         ),
             // pause_outlined
         IconButton(
-            onPressed: () => {print('next')},
+            onPressed: () => {},
             icon: const Icon(Icons.skip_next)),
       ],
     );
