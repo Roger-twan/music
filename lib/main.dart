@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'bottom_bar.dart';
+import 'bottom_bar/index.dart';
+import 'search/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +14,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: const Color(0xffD00A07),
-        iconTheme: IconThemeData(color: Colors.grey[400])
+        iconTheme: IconThemeData(color: Colors.grey[400]),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.grey[400]
+          ),
+        )
       ),
       home: const Scaffold(
         backgroundColor: Colors.black,
-        body: Text('data'),
+        body: SearchScreen(),
         bottomNavigationBar: BottomBar(),
       ),
     );

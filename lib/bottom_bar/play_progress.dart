@@ -68,7 +68,7 @@ class _PlayProgressState extends State<PlayProgress> {
         child: Column(
           children: [
             Container(
-              height: 5,
+              height:isProgressActivity() ? 3 : 5,
               color: Colors.black,
             ),
             Container(
