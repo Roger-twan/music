@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'suggestion_history.dart';
+
 class Suggestion {
   OverlayEntry? _overlayEntry;
   final ValueNotifier<String> _keyWord = ValueNotifier<String>('');
@@ -29,7 +31,10 @@ class Suggestion {
             child: ValueListenableBuilder(
               valueListenable: _keyWord,
               builder: (BuildContext context, String value, Widget? child) {
-                return Column(children: [
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  const SuggestionHistory(),
                   Text(value)
                 ],);
               }),
