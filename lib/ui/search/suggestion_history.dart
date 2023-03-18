@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../controller/search_history.dart';
+
 class SuggestionHistory extends StatefulWidget {
-  const SuggestionHistory({super.key});
+  final String searchKey;
+  const SuggestionHistory({Key? key, required this.searchKey}): super(key: key);
+  
 
   @override
   State<SuggestionHistory> createState() => _SuggestionHistoryState();
 }
 
 class _SuggestionHistoryState extends State<SuggestionHistory> {
-  final List<String> historyList = ['a', 'b', 'c'];
+  List<String> historyList = SearchHistory().getList();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,7 @@ class _SuggestionHistoryState extends State<SuggestionHistory> {
                 children: [
                   Row(
                     children: [
+                      Text(widget.searchKey),
                       const Icon(Icons.history),
                       const SizedBox(width: 10),
                       Text(historyList[index]),

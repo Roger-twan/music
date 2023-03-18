@@ -34,7 +34,7 @@ class Suggestion {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  const SuggestionHistory(),
+                  SuggestionHistory(searchKey: value),
                   Text(value)
                 ],);
               }),
