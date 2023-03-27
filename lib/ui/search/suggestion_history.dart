@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-
 import '../../controller/search_history.dart';
 
 class SuggestionHistory extends StatefulWidget {
   final String searchKey;
   const SuggestionHistory({Key? key, required this.searchKey}): super(key: key);
-  
 
   @override
   State<SuggestionHistory> createState() => _SuggestionHistoryState();
 }
 
 class _SuggestionHistoryState extends State<SuggestionHistory> {
-  List<String> historyList = SearchHistory().getList();
+  final SearchHistory _searchHistory = SearchHistory();
+  late List<String> historyList;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() async {
+    super.initState();
+
+    await _searchHistory.init();
+    historyList = _searchHistory.getList();
+  }
+
+  @override
+  Widget build(BuildContext context) { 
     return ListView.builder(
         primary: false,
         itemCount: historyList.length,
