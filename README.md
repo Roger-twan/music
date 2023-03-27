@@ -1,5 +1,6 @@
-# music
+# 🎵 music
 
+[Build a Cross-Platform Serverless Music App](https://roger.twan.life/Build-a-Cross-Platform-Serverless-Music-App-cf8bc898fce54122b9f936e8c4c10e07)
 A new Flutter project.
 
 ## Getting Started
