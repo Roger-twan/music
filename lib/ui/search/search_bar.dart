@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'suggestion.dart';
+import '../../controller/search_history.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
@@ -12,8 +13,9 @@ class _SearchBarState extends State<SearchBar> {
   GlobalKey searchField = GlobalKey();
   FocusNode searchFieldFocus = FocusNode();
   bool isSearchFieldFocus = false;
-  String searchKey = '';
-  late Suggestion searchSuggestion;
+  String searchWord = '';
+  final Suggestion searchSuggestion = Suggestion();
+  final SearchHistory searchHistory = SearchHistory();
 
   void setIsSearchFieldFocus(bool value) {
     setState(() {
@@ -21,9 +23,9 @@ class _SearchBarState extends State<SearchBar> {
     });
   }
 
-  void setSearchKey(String value) {
+  void setSearchWord(String value) {
     setState(() {
-      searchKey = value;
+      searchWord = value;
     });
   }
 
@@ -31,13 +33,11 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     super.initState();
 
-    searchSuggestion = Suggestion();
+    searchHistory.init();
 
     searchFieldFocus.addListener(() => {
-      searchFieldFocus.hasFocus ?
-        searchSuggestion.show(context, searchKey)
-        : searchSuggestion.hide(),
-      setIsSearchFieldFocus(searchFieldFocus.hasFocus)
+      setIsSearchFieldFocus(searchFieldFocus.hasFocus),
+      updateSuggestion()
     });
   }
 
@@ -45,6 +45,10 @@ class _SearchBarState extends State<SearchBar> {
   void dispose() {
     super.dispose();
     searchFieldFocus.dispose();
+  }
+
+  void updateSuggestion() {
+    searchSuggestion.handle(context, isSearchFieldFocus, searchWord);
   }
 
   @override
@@ -71,8 +75,14 @@ class _SearchBarState extends State<SearchBar> {
               ? Colors.grey[900]
               : Colors.transparent),
       onChanged: (str) => {
-        searchSuggestion.updateWord(str),
-        setSearchKey(str)
+        setSearchWord(str),
+        updateSuggestion()
+      },
+      onSubmitted: (value) async => {
+        if (value.isNotEmpty) {
+          await Future.delayed(const Duration(milliseconds: 50)),
+          await searchHistory.add(value)
+        }
       },
     );
   }

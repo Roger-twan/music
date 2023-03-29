@@ -1,35 +1,38 @@
 import 'package:flutter/material.dart';
 import '../../controller/search_history.dart';
 
-class SuggestionHistory extends StatefulWidget {
-  final String searchKey;
-  const SuggestionHistory({Key? key, required this.searchKey}): super(key: key);
+class SearchHistoryList extends StatefulWidget {
+  final List<String> list;
+  const SearchHistoryList({Key? key, required this.list}): super(key: key);
 
   @override
-  State<SuggestionHistory> createState() => _SuggestionHistoryState();
+  State<SearchHistoryList> createState() => _SearchHistoryListState();
 }
 
-class _SuggestionHistoryState extends State<SuggestionHistory> {
-  final SearchHistory _searchHistory = SearchHistory();
-  late List<String> historyList;
+class _SearchHistoryListState extends State<SearchHistoryList> {
+  final SearchHistory searchHistory = SearchHistory();
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
+    initSearchHistory();
+  }
 
-    await _searchHistory.init();
-    historyList = _searchHistory.getList();
+  void initSearchHistory() async {
+    await searchHistory.init();
   }
 
   @override
   Widget build(BuildContext context) { 
     return ListView.builder(
         primary: false,
-        itemCount: historyList.length,
+        itemCount: widget.list.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () => {},
+            onTap: () => {
+              // print(222)
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               child: Row(
@@ -38,14 +41,15 @@ class _SuggestionHistoryState extends State<SuggestionHistory> {
                 children: [
                   Row(
                     children: [
-                      Text(widget.searchKey),
                       const Icon(Icons.history),
                       const SizedBox(width: 10),
-                      Text(historyList[index]),
+                      Text(widget.list[index]),
                     ]
                   ),
                   IconButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      searchHistory.delete(value: widget.list[index])
+                    },
                     icon: const Icon(Icons.delete_outline)
                   )
                 ],
