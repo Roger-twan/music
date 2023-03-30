@@ -11,6 +11,13 @@ class SearchHistoryList extends StatefulWidget {
 
 class _SearchHistoryListState extends State<SearchHistoryList> {
   final SearchHistory searchHistory = SearchHistory();
+  int mouseOverIndex = -1;
+
+  void setMouseOverIndex(int value) {
+    setState(() {
+      mouseOverIndex = value;
+    });
+  }
 
   @override
   void initState() {
@@ -24,6 +31,7 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
 
   @override
   Widget build(BuildContext context) { 
+          
     return ListView.builder(
         primary: false,
         itemCount: widget.list.length,
@@ -34,25 +42,31 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
               // print(222)
             },
             child: Container(
+              color: mouseOverIndex == index ? Colors.grey[800] : Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.history),
-                      const SizedBox(width: 10),
-                      Text(widget.list[index]),
-                    ]
-                  ),
-                  IconButton(
-                    onPressed: () => {
-                      searchHistory.delete(value: widget.list[index])
-                    },
-                    icon: const Icon(Icons.delete_outline)
-                  )
-                ],
+              child: MouseRegion(
+                cursor: MaterialStateMouseCursor.clickable,
+                onEnter: (e) => setMouseOverIndex(index),
+                onExit: (e) => setMouseOverIndex(-1),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.history),
+                        const SizedBox(width: 10),
+                        Text(widget.list[index]),
+                      ]
+                    ),
+                    IconButton(
+                      onPressed: () => {
+                        searchHistory.delete(value: widget.list[index])
+                      },
+                      icon: const Icon(Icons.delete_outline)
+                    )
+                  ],
+                ),
               )
             ),
           );
