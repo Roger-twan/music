@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music/controller/event_bus.dart';
 import '../../controller/search_history.dart';
 
 class SearchHistoryList extends StatefulWidget {
@@ -39,7 +40,7 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () => {
-              // print(222)
+              eventBus.fire(SearchEvent(widget.list[index]))
             },
             child: Container(
               color: mouseOverIndex == index ? Colors.grey[800] : Colors.transparent,

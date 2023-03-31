@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.19.3 <3.0.0'
 
 dependencies:
+  event_bus: ^2.0.0
   flutter:
     sdk: flutter
   shared_preferences: ^2.0.18

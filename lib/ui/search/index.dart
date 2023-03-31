@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'search_bar.dart';
+import 'result.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -20,12 +21,9 @@ class _SearchScreenState extends State<SearchScreen> {
           const SizedBox(width: 10),
           Expanded(
             child: Column(
-              children: [
-                const SearchBar(),
-                Container(
-                  color: Colors.white,
-                  child: const Text('data'),
-                )
+              children: const [
+                SearchBar(),
+                Expanded(child: SearchResult()),
               ],
             ),
           ),

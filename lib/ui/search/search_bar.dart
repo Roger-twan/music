@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music/controller/event_bus.dart';
 import 'suggestion.dart';
 import '../../controller/search_history.dart';
 
@@ -12,6 +13,7 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   GlobalKey searchField = GlobalKey();
   FocusNode searchFieldFocus = FocusNode();
+  final searchFieldController = TextEditingController();
   bool isSearchFieldFocus = false;
   String searchWord = '';
   final Suggestion searchSuggestion = Suggestion();
@@ -39,6 +41,10 @@ class _SearchBarState extends State<SearchBar> {
       setIsSearchFieldFocus(searchFieldFocus.hasFocus),
       updateSuggestion()
     });
+
+    eventBus.on<SearchEvent>().listen((event) {
+      searchFieldController.text = event.keyword;
+    });
   }
 
   @override
@@ -56,6 +62,7 @@ class _SearchBarState extends State<SearchBar> {
     return TextField(
       key: searchField,
       focusNode: searchFieldFocus,
+      controller: searchFieldController,
       style: const TextStyle(color: Colors.white),
       cursorColor: Colors.white,
       textAlign: TextAlign.center,
@@ -81,7 +88,8 @@ class _SearchBarState extends State<SearchBar> {
       onSubmitted: (value) async => {
         if (value.isNotEmpty) {
           await Future.delayed(const Duration(milliseconds: 50)),
-          await searchHistory.add(value)
+          await searchHistory.add(value),
+          eventBus.fire(SearchEvent(value))
         }
       },
     );
