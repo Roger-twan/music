@@ -10,6 +10,7 @@ dependencies:
   event_bus: ^2.0.0
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.4
   shared_preferences: ^2.0.18
 
 
@@ -21,3 +22,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/assets/

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ResultSongCard extends StatefulWidget {
   const ResultSongCard({super.key});
@@ -18,6 +19,27 @@ class _ResultSongCardState extends State<ResultSongCard> {
 
   @override
   Widget build(BuildContext context) {
+    late Widget icon;
+    String sourceType = 'qq';
+
+    if (sourceType == 'local') {
+      icon = const Icon(Icons.rocket_sharp);
+    } else if (sourceType == 'netEase') {
+      icon = SvgPicture.asset(
+        'lib/assets/netEase.svg',
+        width: 24,
+        height: 24,
+        colorFilter: ColorFilter.mode(Colors.grey[400]!, BlendMode.srcIn),
+      );
+    } else if (sourceType == 'qq') {
+      icon = SvgPicture.asset(
+        'lib/assets/qq.svg',
+        width: 24,
+        height: 24,
+        colorFilter: ColorFilter.mode(Colors.grey[400]!, BlendMode.srcIn),
+      );
+    }
+    
     return GestureDetector(
       onTap: () => {
         // print(222)
@@ -51,7 +73,7 @@ class _ResultSongCardState extends State<ResultSongCard> {
                         Text('Eagle · 7:34' )
                       ],
                     ),
-                    const Icon(Icons.rocket_sharp),
+                    icon,
                   ],
                 ),
               ],
