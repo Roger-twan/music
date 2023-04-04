@@ -22,7 +22,14 @@ class _BottomBarState extends State<BottomBar> {
             const PlayProgress(),
             GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => {},
+                onTap: () => {
+                  showBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return const Text('data');
+                    }
+                  )
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
