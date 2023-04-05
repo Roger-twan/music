@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'play_controller.dart';
 import 'play_progress.dart';
+import '../lyric/index.dart';
 
 class BottomBar extends StatefulWidget {
 const BottomBar({super.key});
@@ -11,6 +12,14 @@ const BottomBar({super.key});
 }
 
 class _BottomBarState extends State<BottomBar> {
+  bool isLyricScreenActivity = false;
+
+  void setIsLyricScreenActivity(bool value) {
+    setState(() {
+      isLyricScreenActivity = value;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -23,12 +32,18 @@ class _BottomBarState extends State<BottomBar> {
             GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () => {
-                  showBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return const Text('data');
-                    }
-                  )
+                  if (!isLyricScreenActivity) {
+                    showBottomSheet(
+                      context: context,
+                      enableDrag: false,
+                      builder: (context) {
+                        return const LyricScreen();
+                      }
+                    )
+                  } else {
+                    Navigator.pop(context)
+                  },
+                  setIsLyricScreenActivity(!isLyricScreenActivity)
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
