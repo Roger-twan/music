@@ -7,3 +7,8 @@ class SearchEvent {
 
   SearchEvent(this.keyword);
 }
+
+enum OpenDrawerEvent {
+  playlist,
+  settings,
+}

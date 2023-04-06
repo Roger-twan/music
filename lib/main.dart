@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widget/bottom_bar/index.dart';
 import 'widget/search/index.dart';
+import 'widget/left_drawer/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
         body: SearchScreen(),
         bottomNavigationBar: BottomBar(),
+        drawer: LeftDrawer(),
       ),
     );
   }
