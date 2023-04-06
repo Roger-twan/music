@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ui/bottom_bar/index.dart';
-import 'ui/search/index.dart';
+import 'widget/bottom_bar/index.dart';
+import 'widget/search/index.dart';
 
 void main() {
   runApp(const MyApp());
