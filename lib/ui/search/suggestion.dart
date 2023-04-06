@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'search_history_list.dart';
-import '../../controller/search_history.dart';
+import '../../provider/search_history.dart';
 
 class Suggestion {
   OverlayEntry? _overlayEntry;

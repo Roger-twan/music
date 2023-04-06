@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:music/controller/event_bus.dart';
+import '../../provider/event_bus.dart';
+import '../../provider/search_history.dart';
 import 'suggestion.dart';
-import '../../controller/search_history.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({super.key});

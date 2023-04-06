@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music/controller/event_bus.dart';
-import '../../controller/search_history.dart';
+import '../../provider/event_bus.dart';
+import '../../provider/search_history.dart';
 
 class SearchHistoryList extends StatefulWidget {
   final List<String> list;
