@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'provider/preferences.dart';
 import 'widget/bottom_bar/index.dart';
 import 'widget/search/index.dart';
 import 'widget/left_drawer/index.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Preferences().init();
   runApp(const MyApp());
 }
 

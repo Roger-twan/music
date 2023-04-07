@@ -11,9 +11,8 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  GlobalKey searchField = GlobalKey();
-  FocusNode searchFieldFocus = FocusNode();
-  final searchFieldController = TextEditingController();
+  final FocusNode searchFieldFocus = FocusNode();
+  final TextEditingController searchFieldController = TextEditingController();
   bool isSearchFieldFocus = false;
   String searchWord = '';
   final Suggestion searchSuggestion = Suggestion();
@@ -34,8 +33,6 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void initState() {
     super.initState();
-
-    searchHistory.init();
 
     searchFieldFocus.addListener(() => {
       setIsSearchFieldFocus(searchFieldFocus.hasFocus),
@@ -60,7 +57,6 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      key: searchField,
       focusNode: searchFieldFocus,
       controller: searchFieldController,
       style: const TextStyle(color: Colors.white),

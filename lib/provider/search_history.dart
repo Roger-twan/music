@@ -1,22 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'preferences.dart';
+
 class SearchHistory {
-  SharedPreferences? _prefs;
   static const int maxCount = 10;
+  final SharedPreferences? _preferences = Preferences().get();
 
   static final SearchHistory _instance = SearchHistory._internal();
   SearchHistory._internal();
   factory SearchHistory() => _instance;
 
-  Future init() async {
-    if (_prefs == null) {
-      _prefs = await SharedPreferences.getInstance();
-      await _prefs!.setStringList('searchHistory', []);
-    }
-  }
 
   List<String> getList() {
-    return _prefs!.getStringList('searchHistory') ?? [];
+    return _preferences?.getStringList('searchHistory') ?? [];
   }
 
   Future<void> add(String value) async {
@@ -26,7 +22,7 @@ class SearchHistory {
       if (!list.contains(value)) {
         list.insert(0, value);
         int end = list.length > maxCount ? maxCount : list.length;
-        await _prefs!.setStringList('searchHistory', list.sublist(0, end));
+        await _preferences?.setStringList('searchHistory', list.sublist(0, end));
       }
     }
   }
@@ -41,6 +37,6 @@ class SearchHistory {
       list.remove(value);
     }
 
-    _prefs!.setStringList('searchHistory', list);
+    await _preferences?.setStringList('searchHistory', list);
   }
 }

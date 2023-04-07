@@ -23,11 +23,6 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
   @override
   void initState() {
     super.initState();
-    initSearchHistory();
-  }
-
-  void initSearchHistory() async {
-    await searchHistory.init();
   }
 
   @override

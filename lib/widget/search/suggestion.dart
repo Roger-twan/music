@@ -12,7 +12,6 @@ class Suggestion {
   factory Suggestion() => _instance;
 
   void handle(BuildContext context, bool isFieldFocus, String keyWord) async {
-    await searchHistory.init();
     List<String> list = searchHistory.getList();
     _list.value = keyWord.isEmpty ? list : list.where((element) => element.startsWith(keyWord)).toList();
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../provider/event_bus.dart';
 import 'search_bar.dart';
 import 'result.dart';
 
@@ -17,7 +18,13 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IconButton(onPressed: () => {}, icon: const Icon(Icons.settings)),
+          IconButton(
+            onPressed: () async => {
+              Scaffold.of(context).openDrawer(),
+              await Future.delayed(const Duration(milliseconds: 10)),
+              eventBus.fire(OpenDrawerEvent.settings),
+            },
+            icon: const Icon(Icons.settings)),
           const SizedBox(width: 10),
           Expanded(
             child: Column(

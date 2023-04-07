@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../provider/event_bus.dart';
 import 'playlist.dart';
+import 'settings.dart';
 
 class LeftDrawer extends StatefulWidget {
   const LeftDrawer({super.key});
@@ -45,7 +46,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
         break;
       case 'settings':
         title = 'Settings';
-        drawer = const Text('text');
+        drawer = const Settings();
         break;
       default: break;
     }
