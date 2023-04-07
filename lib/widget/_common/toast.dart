@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 void showToast(BuildContext context, String message) {
   showModalBottomSheet<void>(
     context: context,
+    barrierColor: Colors.transparent,
     builder: (BuildContext context) {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pop(context);
