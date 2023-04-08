@@ -10,7 +10,6 @@ class SearchHistory {
   SearchHistory._internal();
   factory SearchHistory() => _instance;
 
-
   List<String> getList() {
     return _preferences?.getStringList('searchHistory') ?? [];
   }
@@ -22,7 +21,8 @@ class SearchHistory {
       if (!list.contains(value)) {
         list.insert(0, value);
         int end = list.length > maxCount ? maxCount : list.length;
-        await _preferences?.setStringList('searchHistory', list.sublist(0, end));
+        await _preferences?.setStringList(
+            'searchHistory', list.sublist(0, end));
       }
     }
   }

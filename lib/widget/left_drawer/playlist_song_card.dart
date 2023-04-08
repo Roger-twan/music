@@ -26,19 +26,13 @@ class _PlaylistSongCardState extends State<PlaylistSongCard> {
         cursor: MaterialStateMouseCursor.clickable,
         onEnter: (e) => setIsCardHover(true),
         onExit: (e) => setIsCardHover(false),
-        child: Stack(
-          children: [
-            Container(
+        child: Stack(children: [
+          Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             decoration: BoxDecoration(
-              color: isCardHover ? Colors.black : Colors.transparent,
-              border: const Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0
-                )
-              )
-            ),
+                color: isCardHover ? Colors.black : Colors.transparent,
+                border: const Border(
+                    bottom: BorderSide(color: Colors.grey, width: 0))),
             child: Column(
               children: [
                 Row(
@@ -47,7 +41,8 @@ class _PlaylistSongCardState extends State<PlaylistSongCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text('Hotel California', style: TextStyle(color: Colors.white)),
+                        Text('Hotel California',
+                            style: TextStyle(color: Colors.white)),
                         Text('Eagle')
                       ],
                     ),

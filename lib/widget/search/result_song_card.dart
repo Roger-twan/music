@@ -39,7 +39,7 @@ class _ResultSongCardState extends State<ResultSongCard> {
         colorFilter: ColorFilter.mode(Colors.grey[400]!, BlendMode.srcIn),
       );
     }
-    
+
     return GestureDetector(
       onTap: () => {
         // print(222)
@@ -48,19 +48,13 @@ class _ResultSongCardState extends State<ResultSongCard> {
         cursor: MaterialStateMouseCursor.clickable,
         onEnter: (e) => setIsCardHover(true),
         onExit: (e) => setIsCardHover(false),
-        child: Stack(
-          children: [
-            Container(
+        child: Stack(children: [
+          Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             decoration: BoxDecoration(
-              color: isCardHover ? Colors.grey[900] : Colors.transparent,
-              border: const Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0
-                )
-              )
-            ),
+                color: isCardHover ? Colors.grey[900] : Colors.transparent,
+                border: const Border(
+                    bottom: BorderSide(color: Colors.grey, width: 0))),
             child: Column(
               children: [
                 Row(
@@ -69,8 +63,9 @@ class _ResultSongCardState extends State<ResultSongCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text('Hotel California', style: TextStyle(color: Colors.white)),
-                        Text('Eagle · 7:34' )
+                        Text('Hotel California',
+                            style: TextStyle(color: Colors.white)),
+                        Text('Eagle · 7:34')
                       ],
                     ),
                     icon,
@@ -82,13 +77,13 @@ class _ResultSongCardState extends State<ResultSongCard> {
           Stack(
             children: [
               Positioned(
-                left: 0,
-                bottom: 0,
-                child: Container(
-                width: 200,
-                height: 1,
-                color: Theme.of(context).primaryColor,
-              ))
+                  left: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: 200,
+                    height: 1,
+                    color: Theme.of(context).primaryColor,
+                  ))
             ],
           )
         ]),

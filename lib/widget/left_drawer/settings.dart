@@ -29,14 +29,14 @@ class _SettingsState extends State<Settings> {
     super.initState();
 
     double? cacheAmount = preferences?.getDouble('cacheAmount');
-    setOriginalCacheAmount(cacheAmount.toString().replaceAll(RegExp(r'([.]*0)(?!.*\d)'), ''));
+    setOriginalCacheAmount(
+        cacheAmount.toString().replaceAll(RegExp(r'([.]*0)(?!.*\d)'), ''));
     cacheFieldController.text = originalCacheAmount;
 
     cacheFieldFocus.addListener(() async => {
-      if (!cacheFieldFocus.hasFocus) {
-        await setCacheAmount(cacheFieldController.text)
-      }
-    });
+          if (!cacheFieldFocus.hasFocus)
+            {await setCacheAmount(cacheFieldController.text)}
+        });
   }
 
   Future<void> setCacheAmount(String value) async {
@@ -84,9 +84,8 @@ class _SettingsState extends State<Settings> {
                       ],
                       cursorColor: Colors.white,
                       decoration: commonInputDecoration(),
-                      onSubmitted: (value) async => {
-                        await setCacheAmount(value)
-                      },
+                      onSubmitted: (value) async =>
+                          {await setCacheAmount(value)},
                     ),
                   ),
                   const SizedBox(width: 5),

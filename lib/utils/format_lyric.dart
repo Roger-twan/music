@@ -8,7 +8,8 @@ class Lyric {
 
 List<Lyric> formatLyric(String lyricStr) {
   RegExp reg = RegExp(r'^\[\d{2}');
-  List<String> realLyricStr = lyricStr.split('\n').where((element) => reg.hasMatch(element)).toList();
+  List<String> realLyricStr =
+      lyricStr.split('\n').where((element) => reg.hasMatch(element)).toList();
 
   List<Lyric> result = realLyricStr.map((str) {
     String time = str.substring(0, str.indexOf(']'));
@@ -23,14 +24,15 @@ List<Lyric> formatLyric(String lyricStr) {
       lyric,
       startTime: Duration(
         minutes: int.parse(time.substring(0, minuteSeparatorIndex)),
-        seconds: int.parse(time.substring(minuteSeparatorIndex + 1, secondSeparatorIndex)),
+        seconds: int.parse(
+            time.substring(minuteSeparatorIndex + 1, secondSeparatorIndex)),
         milliseconds: int.parse(time.substring(secondSeparatorIndex + 1)),
       ),
     );
   }).toList();
 
   for (int i = 0; i < result.length - 1; i++) {
-    result[i].endTime = result[i+1].startTime;
+    result[i].endTime = result[i + 1].startTime;
   }
 
   return result;

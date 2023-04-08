@@ -6,7 +6,7 @@ import 'widget/left_drawer/index.dart';
 import 'widget/upload/index.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   await Preferences().init();
   runApp(const MyApp());
 }
@@ -18,14 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: const Color(0xffD00A07),
-        iconTheme: IconThemeData(color: Colors.grey[400]),
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(
-            color: Colors.grey[400]
-          ),
-        )
-      ),
+          primaryColor: const Color(0xffD00A07),
+          iconTheme: IconThemeData(color: Colors.grey[400]),
+          textTheme: TextTheme(
+            bodyMedium: TextStyle(color: Colors.grey[400]),
+          )),
       home: const Scaffold(
         backgroundColor: Colors.black,
         body: SearchScreen(),

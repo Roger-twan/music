@@ -16,37 +16,36 @@ class _SearchResultState extends State<SearchResult> {
       child: Column(
         children: [
           Expanded(
-            child: ListView(
-              children: [
-                GridView.builder(
+            child: ListView(children: [
+              GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 56,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 30,
-                  crossAxisCount:
-                      (MediaQuery.of(context).size.width ~/ 300).toInt(),
-                ),
-                itemCount: 12,
-                itemBuilder: (BuildContext context, int index) {
-                  return const ResultSongCard();
-                }),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: OutlinedButton(onPressed: () {}, child: const Text('Search More')),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: CircularProgressIndicator(
-                      color: Colors.grey[800]
-                                      ),
-                    )],
-                )
-              ]),
+                    mainAxisExtent: 56,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 30,
+                    crossAxisCount:
+                        (MediaQuery.of(context).size.width ~/ 300).toInt(),
+                  ),
+                  itemCount: 12,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const ResultSongCard();
+                  }),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: OutlinedButton(
+                    onPressed: () {}, child: const Text('Search More')),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: CircularProgressIndicator(color: Colors.grey[800]),
+                  )
+                ],
+              )
+            ]),
           ),
         ],
       ),

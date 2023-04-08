@@ -34,10 +34,8 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     super.initState();
 
-    searchFieldFocus.addListener(() => {
-      setIsSearchFieldFocus(searchFieldFocus.hasFocus),
-      updateSuggestion()
-    });
+    searchFieldFocus.addListener(() =>
+        {setIsSearchFieldFocus(searchFieldFocus.hasFocus), updateSuggestion()});
 
     eventBus.on<SearchEvent>().listen((event) {
       searchFieldController.text = event.keyword;
@@ -77,16 +75,14 @@ class _SearchBarState extends State<SearchBar> {
           fillColor: searchFieldFocus.hasFocus
               ? Colors.grey[900]
               : Colors.transparent),
-      onChanged: (str) => {
-        setSearchWord(str),
-        updateSuggestion()
-      },
+      onChanged: (str) => {setSearchWord(str), updateSuggestion()},
       onSubmitted: (value) async => {
-        if (value.isNotEmpty) {
-          await Future.delayed(const Duration(milliseconds: 50)),
-          await searchHistory.add(value),
-          eventBus.fire(SearchEvent(value))
-        }
+        if (value.isNotEmpty)
+          {
+            await Future.delayed(const Duration(milliseconds: 50)),
+            await searchHistory.add(value),
+            eventBus.fire(SearchEvent(value))
+          }
       },
     );
   }

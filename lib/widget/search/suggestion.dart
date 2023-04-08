@@ -13,7 +13,9 @@ class Suggestion {
 
   void handle(BuildContext context, bool isFieldFocus, String keyWord) async {
     List<String> list = searchHistory.getList();
-    _list.value = keyWord.isEmpty ? list : list.where((element) => element.startsWith(keyWord)).toList();
+    _list.value = keyWord.isEmpty
+        ? list
+        : list.where((element) => element.startsWith(keyWord)).toList();
 
     if (isFieldFocus) {
       if (keyWord.isNotEmpty || _list.value.isNotEmpty) {
@@ -33,32 +35,30 @@ class Suggestion {
     if (_overlayEntry == null) {
       _overlayEntry = OverlayEntry(builder: (context) {
         return Positioned(
-          top: 59,
-          left: 56,
-          right: 56,
-          child: Material(
-            child: Container(
+            top: 59,
+            left: 56,
+            right: 56,
+            child: Material(
+                child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[900],
-                border: const Border(
-                  top: BorderSide.none,
-                  left: BorderSide(color: Colors.white, width: 0),
-                  right: BorderSide(color: Colors.white, width: 0),
-                  bottom: BorderSide(color: Colors.white, width: 0)
-                )
-              ),
+                  color: Colors.grey[900],
+                  border: const Border(
+                      top: BorderSide.none,
+                      left: BorderSide(color: Colors.white, width: 0),
+                      right: BorderSide(color: Colors.white, width: 0),
+                      bottom: BorderSide(color: Colors.white, width: 0))),
               child: ValueListenableBuilder<List<String>>(
-                valueListenable: _list,
-                builder: (BuildContext context, List<String> value, Widget? child) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    SearchHistoryList(list: value),
-                  ],);
-                }),
-            )
-          )
-        );
+                  valueListenable: _list,
+                  builder: (BuildContext context, List<String> value,
+                      Widget? child) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SearchHistoryList(list: value),
+                      ],
+                    );
+                  }),
+            )));
       });
 
       Overlay.of(context).insert(_overlayEntry!);

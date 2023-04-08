@@ -5,7 +5,7 @@ import 'play_progress.dart';
 import '../lyric/index.dart';
 
 class BottomBar extends StatefulWidget {
-const BottomBar({super.key});
+  const BottomBar({super.key});
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -19,7 +19,7 @@ class _BottomBarState extends State<BottomBar> {
       isLyricScreenActivity = value;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -34,12 +34,11 @@ class _BottomBarState extends State<BottomBar> {
                 onTap: () {
                   if (!isLyricScreenActivity) {
                     showBottomSheet(
-                      context: context,
-                      enableDrag: false,
-                      builder: (context) {
-                        return const LyricScreen();
-                      }
-                    );
+                        context: context,
+                        enableDrag: false,
+                        builder: (context) {
+                          return const LyricScreen();
+                        });
                   } else {
                     Navigator.pop(context);
                   }
@@ -53,7 +52,8 @@ class _BottomBarState extends State<BottomBar> {
                       IconButton(
                         onPressed: () async => {
                           Scaffold.of(context).openDrawer(),
-                          await Future.delayed(const Duration(milliseconds: 10)),
+                          await Future.delayed(
+                              const Duration(milliseconds: 10)),
                           eventBus.fire(OpenDrawerEvent.playlist),
                         },
                         icon: const Icon(Icons.queue_music),

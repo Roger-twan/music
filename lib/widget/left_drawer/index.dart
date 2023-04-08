@@ -48,29 +48,27 @@ class _LeftDrawerState extends State<LeftDrawer> {
         title = 'Settings';
         drawer = const Settings();
         break;
-      default: break;
+      default:
+        break;
     }
 
     return Drawer(
-      backgroundColor: Colors.grey[900],
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-              )
-            ),
-            const SizedBox(height: 20),
-            Expanded(child: drawer)
-          ],
-        ),
-      )
-    );
+        backgroundColor: Colors.grey[900],
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                  )),
+              const SizedBox(height: 20),
+              Expanded(child: drawer)
+            ],
+          ),
+        ));
   }
 }

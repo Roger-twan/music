@@ -12,18 +12,14 @@ class _PlayControllerState extends State<PlayController> {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_previous)),
         IconButton(
-            onPressed: () => {},
-            icon: const Icon(Icons.skip_previous)),
-        IconButton(
-            onPressed: () => {},
-            icon: const Icon(Icons.play_arrow),
-            iconSize: 40,
+          onPressed: () => {},
+          icon: const Icon(Icons.play_arrow),
+          iconSize: 40,
         ),
-            // pause_outlined
-        IconButton(
-            onPressed: () => {},
-            icon: const Icon(Icons.skip_next)),
+        // pause_outlined
+        IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_next)),
       ],
     );
   }

@@ -11,11 +11,8 @@ void showToast(BuildContext context, String message) {
       return Container(
           color: Colors.grey[800],
           padding: const EdgeInsets.all(12),
-          child: Wrap(alignment: WrapAlignment.center, children: [
-            Text(
-              message
-            )
-          ]));
+          child:
+              Wrap(alignment: WrapAlignment.center, children: [Text(message)]));
     },
   );
 }

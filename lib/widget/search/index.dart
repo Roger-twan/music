@@ -19,12 +19,12 @@ class _SearchScreenState extends State<SearchScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IconButton(
-            onPressed: () async => {
-              Scaffold.of(context).openDrawer(),
-              await Future.delayed(const Duration(milliseconds: 10)),
-              eventBus.fire(OpenDrawerEvent.settings),
-            },
-            icon: const Icon(Icons.settings)),
+              onPressed: () async => {
+                    Scaffold.of(context).openDrawer(),
+                    await Future.delayed(const Duration(milliseconds: 10)),
+                    eventBus.fire(OpenDrawerEvent.settings),
+                  },
+              icon: const Icon(Icons.settings)),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -35,9 +35,11 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           const SizedBox(width: 10),
-          IconButton(onPressed: () => {
-            Scaffold.of(context).openEndDrawer(),
-          }, icon: const Icon(Icons.cloud_upload))
+          IconButton(
+              onPressed: () => {
+                    Scaffold.of(context).openEndDrawer(),
+                  },
+              icon: const Icon(Icons.cloud_upload))
         ],
       ),
     );
