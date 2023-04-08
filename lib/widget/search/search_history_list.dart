@@ -34,9 +34,7 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () => {
-              eventBus.fire(SearchEvent(widget.list[index]))
-            },
+            onTap: () => eventBus.fire(SearchEvent(widget.list[index])),
             child: Container(
               color: mouseOverIndex == index ? Colors.grey[800] : Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),

@@ -3,6 +3,7 @@ import 'provider/preferences.dart';
 import 'widget/bottom_bar/index.dart';
 import 'widget/search/index.dart';
 import 'widget/left_drawer/index.dart';
+import 'widget/upload/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         body: SearchScreen(),
         bottomNavigationBar: BottomBar(),
         drawer: LeftDrawer(),
+        endDrawer: UploadDrawer(),
       ),
     );
   }

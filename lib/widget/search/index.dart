@@ -35,7 +35,9 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           const SizedBox(width: 10),
-          IconButton(onPressed: () => {}, icon: const Icon(Icons.cloud_upload))
+          IconButton(onPressed: () => {
+            Scaffold.of(context).openEndDrawer(),
+          }, icon: const Icon(Icons.cloud_upload))
         ],
       ),
     );

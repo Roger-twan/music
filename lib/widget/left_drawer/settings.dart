@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../provider/preferences.dart';
+import '../_common/input_decoration.dart';
 import '../_common/toast.dart';
 
 class Settings extends StatefulWidget {
@@ -82,23 +83,10 @@ class _SettingsState extends State<Settings> {
                         FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
                       ],
                       cursorColor: Colors.white,
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 0),
-                        ),
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white, width: 0),
-                        ),
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        filled: true,
-                      ),
-                      // onSubmitted: (value) async => {
-                      //   await setCacheAmount(value)
-                      // },
+                      decoration: commonInputDecoration(),
+                      onSubmitted: (value) async => {
+                        await setCacheAmount(value)
+                      },
                     ),
                   ),
                   const SizedBox(width: 5),

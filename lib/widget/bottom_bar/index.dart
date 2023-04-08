@@ -31,7 +31,7 @@ class _BottomBarState extends State<BottomBar> {
             const PlayProgress(),
             GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => {
+                onTap: () {
                   if (!isLyricScreenActivity) {
                     showBottomSheet(
                       context: context,
@@ -39,11 +39,11 @@ class _BottomBarState extends State<BottomBar> {
                       builder: (context) {
                         return const LyricScreen();
                       }
-                    )
+                    );
                   } else {
-                    Navigator.pop(context)
-                  },
-                  setIsLyricScreenActivity(!isLyricScreenActivity)
+                    Navigator.pop(context);
+                  }
+                  setIsLyricScreenActivity(!isLyricScreenActivity);
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
