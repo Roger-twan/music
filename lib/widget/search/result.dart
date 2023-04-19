@@ -52,3 +52,12 @@ class _SearchResultState extends State<SearchResult> {
     );
   }
 }
+
+// Future<List<Post>> fetchPosts() async {
+//   final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+//   if (response.statusCode == 200) {
+//     return List<Post>.from(jsonDecode(response.body).map((x) => Post.fromJson(x)));
+//   } else {
+//     throw Exception('Failed to fetch posts');
+//   }
+// }
