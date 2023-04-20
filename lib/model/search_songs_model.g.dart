@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_list_model.dart';
+part of 'search_songs_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchListModel _$SearchListModelFromJson(Map<String, dynamic> json) =>
-    SearchListModel(
+SearchSongsModel _$SearchSongsModelFromJson(Map<String, dynamic> json) =>
+    SearchSongsModel(
       (json['result'] as List<dynamic>)
           .map((e) => SongModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$SearchListModelToJson(SearchListModel instance) =>
+Map<String, dynamic> _$SearchSongsModelToJson(SearchSongsModel instance) =>
     <String, dynamic>{
       'result': instance.result,
     };

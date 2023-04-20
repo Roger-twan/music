@@ -1,15 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'search_list_model.g.dart';
+part 'search_songs_model.g.dart';
 
 @JsonSerializable()
-class SearchListModel {
-  final List<SongModel> result;
-  SearchListModel(this.result);
+class SearchSongsModel {
+  List<SongModel> result;
 
-  factory SearchListModel.fromJson(Map<String, dynamic> json) =>
-      _$SearchListModelFromJson(json);
-  Map<String, dynamic> toJson() => _$SearchListModelToJson(this);
+  SearchSongsModel(this.result);
+
+  factory SearchSongsModel.fromJson(Map<String, dynamic> json) =>
+      _$SearchSongsModelFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchSongsModelToJson(this);
 }
 
 @JsonSerializable()
