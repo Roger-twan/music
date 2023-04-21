@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../model/search_songs_model.dart';
+import '../../utils/time_converter.dart';
 
 class ResultSongCard extends StatefulWidget {
-  const ResultSongCard({super.key});
+  final SongModel song;
+  const ResultSongCard({Key? key, required this.song}) : super(key: key);
 
   @override
   State<ResultSongCard> createState() => _ResultSongCardState();
@@ -20,11 +23,11 @@ class _ResultSongCardState extends State<ResultSongCard> {
   @override
   Widget build(BuildContext context) {
     late Widget icon;
-    String sourceType = 'qq';
+    String sourceType = widget.song.source;
 
-    if (sourceType == 'local') {
+    if (sourceType == 'storage') {
       icon = const Icon(Icons.rocket_sharp);
-    } else if (sourceType == 'netEase') {
+    } else if (sourceType == 'netease') {
       icon = SvgPicture.asset(
         'lib/assets/netEase.svg',
         width: 24,
@@ -62,10 +65,10 @@ class _ResultSongCardState extends State<ResultSongCard> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('Hotel California',
-                            style: TextStyle(color: Colors.white)),
-                        Text('Eagle · 7:34')
+                      children: [
+                        Text(widget.song.name,
+                            style: const TextStyle(color: Colors.white)),
+                        Text('${widget.song.artist} · ${TimeConverter.ms2ms(widget.song.duration)}')
                       ],
                     ),
                     icon,
@@ -74,18 +77,18 @@ class _ResultSongCardState extends State<ResultSongCard> {
               ],
             ),
           ),
-          Stack(
-            children: [
-              Positioned(
-                  left: 0,
-                  bottom: 0,
-                  child: Container(
-                    width: 200,
-                    height: 1,
-                    color: Theme.of(context).primaryColor,
-                  ))
-            ],
-          )
+          // Stack(
+          //   children: [
+          //     Positioned(
+          //         left: 0,
+          //         bottom: 0,
+          //         child: Container(
+          //           width: 200,
+          //           height: 1,
+          //           color: Theme.of(context).primaryColor,
+          //         ))
+          //   ],
+          // )
         ]),
       ),
     );

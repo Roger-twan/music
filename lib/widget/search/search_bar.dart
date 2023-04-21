@@ -38,7 +38,7 @@ class _SearchBarState extends State<SearchBar> {
         {setIsSearchFieldFocus(searchFieldFocus.hasFocus), updateSuggestion()});
 
     eventBus.on<SearchEvent>().listen((event) {
-      searchFieldController.text = event.keyword;
+      searchFieldController.text = event.keywords;
     });
   }
 

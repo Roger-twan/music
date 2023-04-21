@@ -9,7 +9,8 @@ part of 'search_songs_model.dart';
 SearchSongsModel _$SearchSongsModelFromJson(Map<String, dynamic> json) =>
     SearchSongsModel(
       (json['result'] as List<dynamic>)
-          .map((e) => SongModel.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              e == null ? null : SongModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -24,7 +25,7 @@ SongModel _$SongModelFromJson(Map<String, dynamic> json) => SongModel(
       artist: json['artist'] as String,
       url: json['url'] as String?,
       source: json['source'] as String,
-      duration: json['duration'] as String,
+      duration: json['duration'] as int,
       lyric: json['lyric'] as String?,
       originId: json['origin_id'] as String?,
       key: json['key'] as String?,

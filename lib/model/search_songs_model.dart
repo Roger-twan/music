@@ -4,7 +4,7 @@ part 'search_songs_model.g.dart';
 
 @JsonSerializable()
 class SearchSongsModel {
-  List<SongModel> result;
+  List<SongModel?> result;
 
   SearchSongsModel(this.result);
 
@@ -20,7 +20,7 @@ class SongModel {
   final String artist;
   String? url;
   final String source;
-  final String duration;
+  final int duration;
   String? lyric;
   @JsonKey(name: 'origin_id')
   String? originId;
