@@ -68,7 +68,8 @@ class _ResultSongCardState extends State<ResultSongCard> {
                       children: [
                         Text(widget.song.name,
                             style: const TextStyle(color: Colors.white)),
-                        Text('${widget.song.artist} · ${TimeConverter.ms2ms(widget.song.duration)}')
+                        Text(
+                            '${widget.song.artist} · ${TimeConverter.ms2ms(widget.song.duration)}')
                       ],
                     ),
                     icon,
