@@ -17,7 +17,6 @@ class _SearchResultState extends State<SearchResult> {
   String _searchKeywords = '';
   int _page = 1;
   String _source = 'storage';
-  final int pageLimit = 6;
   bool _isSearchEnd = false;
 
   Future<SearchSongsModel> searchSongs() async {
@@ -44,7 +43,7 @@ class _SearchResultState extends State<SearchResult> {
   }
 
   void setPageSource(List data) {
-    if (data.length < pageLimit) {
+    if (data.isEmpty) {
       if (_source == 'storage') {
         _source = 'netease';
       } else if (_source == 'netease') {
@@ -95,7 +94,7 @@ class _SearchResultState extends State<SearchResult> {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisExtent: 56,
+                          mainAxisExtent: 64,
                           mainAxisSpacing: 20,
                           crossAxisSpacing: 30,
                           crossAxisCount:

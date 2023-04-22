@@ -24,9 +24,11 @@ class _ResultSongCardState extends State<ResultSongCard> {
   Widget build(BuildContext context) {
     late Widget icon;
     String sourceType = widget.song.source;
+    String subTitle = widget.song.artist;
 
     if (sourceType == 'storage') {
       icon = const Icon(Icons.rocket_sharp);
+      subTitle += ' · ${TimeConverter.ms2ms(widget.song.duration)}';
     } else if (sourceType == 'netease') {
       icon = SvgPicture.asset(
         'lib/assets/netEase.svg',
@@ -51,46 +53,36 @@ class _ResultSongCardState extends State<ResultSongCard> {
         cursor: MaterialStateMouseCursor.clickable,
         onEnter: (e) => setIsCardHover(true),
         onExit: (e) => setIsCardHover(false),
-        child: Stack(children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            decoration: BoxDecoration(
-                color: isCardHover ? Colors.grey[900] : Colors.transparent,
-                border: const Border(
-                    bottom: BorderSide(color: Colors.grey, width: 0))),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          decoration: BoxDecoration(
+              color: isCardHover ? Colors.grey[900] : Colors.transparent,
+              border: const Border(
+                  bottom: BorderSide(color: Colors.grey, width: 0))),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(widget.song.name,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(color: Colors.white)),
-                        Text(
-                            '${widget.song.artist} · ${TimeConverter.ms2ms(widget.song.duration)}')
+                        const SizedBox(height: 4),
+                        Text(subTitle, overflow: TextOverflow.ellipsis)
                       ],
                     ),
-                    icon,
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  const SizedBox(width: 10),
+                  icon,
+                ],
+              ),
+            ],
           ),
-          // Stack(
-          //   children: [
-          //     Positioned(
-          //         left: 0,
-          //         bottom: 0,
-          //         child: Container(
-          //           width: 200,
-          //           height: 1,
-          //           color: Theme.of(context).primaryColor,
-          //         ))
-          //   ],
-          // )
-        ]),
+        ),
       ),
     );
   }
