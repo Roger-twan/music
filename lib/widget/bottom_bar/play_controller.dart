@@ -38,7 +38,7 @@ class _PlayControllerState extends State<PlayController> {
           onPressed: () {
             final player = MusicPlayer();
 
-            isPlaying ? player.pause(): player.play();
+            isPlaying ? player.pause() : player.play();
           },
           icon: Icon(isPlaying ? Icons.pause_outlined : Icons.play_arrow),
           iconSize: 40,

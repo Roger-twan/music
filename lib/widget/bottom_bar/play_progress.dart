@@ -75,7 +75,8 @@ class _PlayProgressState extends State<PlayProgress> {
 
   void onDotDragEnd(DragEndDetails e) {
     setIsDotDragging(false);
-    player.seek(totalDuration * dotProgress ~/ MediaQuery.of(context).size.width);
+    player
+        .seek(totalDuration * dotProgress ~/ MediaQuery.of(context).size.width);
   }
 
   void setHoverDuration(double dx) {
@@ -87,7 +88,9 @@ class _PlayProgressState extends State<PlayProgress> {
   }
 
   double getDotPosition() {
-    return isDotDragging || totalDuration == 0 ? dotProgress : MediaQuery.of(context).size.width * (position / totalDuration);
+    return isDotDragging || totalDuration == 0
+        ? dotProgress
+        : MediaQuery.of(context).size.width * (position / totalDuration);
   }
 
   @override
@@ -102,11 +105,13 @@ class _PlayProgressState extends State<PlayProgress> {
         setPosition(event.position!);
 
         if (!isDotDragging) {
-          setDotProgress(MediaQuery.of(context).size.width * (event.position! / totalDuration));
+          setDotProgress(MediaQuery.of(context).size.width *
+              (event.position! / totalDuration));
         }
       }
       if (event.bufferedPosition != null) {
-        double loadedBuffer = MediaQuery.of(context).size.width * (event.bufferedPosition! / totalDuration);
+        double loadedBuffer = MediaQuery.of(context).size.width *
+            (event.bufferedPosition! / totalDuration);
         setLoadedProgress(loadedBuffer);
       }
     });
@@ -146,7 +151,7 @@ class _PlayProgressState extends State<PlayProgress> {
                     width: getDotPosition(),
                   ),
                   isProgressActivity()
-                    // dot
+                      // dot
                       ? Positioned(
                           top: isDotDragging ? -8 : -4,
                           left: getDotPosition() - (isDotDragging ? 10 : 6),
@@ -166,13 +171,14 @@ class _PlayProgressState extends State<PlayProgress> {
                           ))
                       : Container(),
                   isProgressActivity()
-                    // current position text
+                      // current position text
                       ? Positioned(
                           top: -25,
                           left: getDotPosition(),
                           child: FractionalTranslation(
                             translation: const Offset(-0.5, 0),
-                            child: Text('${TimeConverter.formatMilliseconds(isDotDragging ? totalDuration * dotProgress ~/ MediaQuery.of(context).size.width : position)} / ${TimeConverter.formatMilliseconds(totalDuration)}',
+                            child: Text(
+                                '${TimeConverter.formatMilliseconds(isDotDragging ? totalDuration * dotProgress ~/ MediaQuery.of(context).size.width : position)} / ${TimeConverter.formatMilliseconds(totalDuration)}',
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 12)),
@@ -192,7 +198,9 @@ class _PlayProgressState extends State<PlayProgress> {
                                   color: Colors.grey[900],
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(2))),
-                              child: Text(TimeConverter.formatMilliseconds(hoverDuration),
+                              child: Text(
+                                  TimeConverter.formatMilliseconds(
+                                      hoverDuration),
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 12)),
                             ),
