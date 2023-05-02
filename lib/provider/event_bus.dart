@@ -12,3 +12,17 @@ enum OpenDrawerEvent {
   playlist,
   settings,
 }
+
+class PlayEvent {
+  bool? isPlaying;
+  int? duration;
+  int? position;
+  int? bufferedPosition;
+
+  PlayEvent({
+    this.isPlaying,
+    this.duration,
+    this.position,
+    this.bufferedPosition,
+  });
+}

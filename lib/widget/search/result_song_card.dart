@@ -29,7 +29,7 @@ class _ResultSongCardState extends State<ResultSongCard> {
 
     if (sourceType == 'storage') {
       icon = const Icon(Icons.rocket_sharp);
-      subTitle += ' · ${TimeConverter.ms2ms(widget.song.duration)}';
+      subTitle += ' · ${TimeConverter.formatMilliseconds(widget.song.duration)}';
     } else if (sourceType == 'netease') {
       icon = SvgPicture.asset(
         'lib/assets/netEase.svg',
@@ -51,7 +51,7 @@ class _ResultSongCardState extends State<ResultSongCard> {
         if (widget.song.url != null && widget.song.url!.isNotEmpty) {
           final player = MusicPlayer();
 
-          player.play(widget.song.url!);
+          player.play(widget.song);
         }
       },
       child: MouseRegion(

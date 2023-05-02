@@ -1,7 +1,10 @@
 import 'package:just_audio/just_audio.dart';
+import '../model/search_songs_model.dart';
+import 'event_bus.dart';
 
 class MusicPlayer {
   final _player = AudioPlayer();
+  late SongModel _playingSong;
 
   static final MusicPlayer _instance = MusicPlayer._internal();
   MusicPlayer._internal();
@@ -9,32 +12,34 @@ class MusicPlayer {
 
   void init() {
     _player.playerStateStream.listen((PlayerState state) {
-      // switch (state.processingState) {
-      //   case ProcessingState.idle:
-
-      //   case ProcessingState.loading: ...
-      //   case ProcessingState.buffering: ...
-      //   case ProcessingState.ready: ...
-      //   case ProcessingState.completed: ...
-      // }
+      eventBus.fire(PlayEvent(isPlaying: state.playing));
+    });
+    _player.positionStream.listen((Duration? duration) {
+      eventBus.fire(PlayEvent(position: duration!.inMilliseconds));
+    });
+    _player.bufferedPositionStream.listen((Duration? duration) {
+      eventBus.fire(PlayEvent(bufferedPosition: duration!.inMilliseconds));
     });
   }
 
-  Future play(String url) async {
-    await _player.setUrl(url);
-    // final duration = await _player.setUrl(url);
+  Future play([SongModel? song]) async {
+    if (song != null) {
+      _playingSong = song;
+      final duration = await _player.setUrl(song.url!);
+      eventBus.fire(PlayEvent(duration: duration!.inMilliseconds));
+    }
     _player.play();
   }
 
-  Future stop() async {
+  Future pause() async {
     await _player.pause();
   }
 
-  Future resume() async {
-    // await _player.resume();
+  Future seek(int ms) async {
+    await _player.seek(Duration(milliseconds: ms));
   }
 
-  Future seek(int ms) async {
-    await _player.seek(Duration(microseconds: ms));
+  SongModel getPlayingSong() {
+    return _playingSong;
   }
 }

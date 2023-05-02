@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../provider/event_bus.dart';
+import '../../provider/music_player.dart';
+import '../../utils/time_converter.dart';
 
 class PlayProgress extends StatefulWidget {
   const PlayProgress({super.key});
@@ -10,14 +12,19 @@ class PlayProgress extends StatefulWidget {
 
 class _PlayProgressState extends State<PlayProgress> {
   bool isProgressHover = false;
-  bool isDotDrag = false;
-  double dotProgress = 100;
+  bool isDotDragging = false;
+  double dotProgress = 0;
   double mouseX = 0;
   static const double activeHeight = 4;
   static const double inactiveHeight = 2;
+  int totalDuration = 0;
+  int hoverDuration = 0;
+  int position = 0;
+  double loadedProgress = 0;
+  final player = MusicPlayer();
 
   bool isProgressActivity() {
-    return isProgressHover || isDotDrag;
+    return isProgressHover || isDotDragging;
   }
 
   void setIsProgressHover(bool value) {
@@ -26,19 +33,15 @@ class _PlayProgressState extends State<PlayProgress> {
     });
   }
 
-  void setMouseX(PointerHoverEvent e) {
+  void setMouseX(double dx) {
     setState(() {
-      mouseX = e.position.dx;
+      mouseX = dx;
     });
   }
 
-  void onProgressTap() {
-    setDotProgress(mouseX);
-  }
-
-  void setIsDotDrag(bool value) {
+  void setIsDotDragging(bool value) {
     setState(() {
-      isDotDrag = value;
+      isDotDragging = value;
     });
   }
 
@@ -48,12 +51,65 @@ class _PlayProgressState extends State<PlayProgress> {
     });
   }
 
+  void setTotalDuration(int value) {
+    setState(() {
+      totalDuration = value;
+    });
+  }
+
+  void setPosition(int value) {
+    setState(() {
+      position = value;
+    });
+  }
+
+  void setLoadedProgress(double value) {
+    setState(() {
+      loadedProgress = value;
+    });
+  }
+
   void onDotDrag(DragUpdateDetails e) {
     setDotProgress(e.globalPosition.dx);
   }
 
   void onDotDragEnd(DragEndDetails e) {
-    setIsDotDrag(false);
+    setIsDotDragging(false);
+    player.seek(totalDuration * dotProgress ~/ MediaQuery.of(context).size.width);
+  }
+
+  void setHoverDuration(double dx) {
+    double radio = MediaQuery.of(context).size.width / dx;
+
+    setState(() {
+      hoverDuration = totalDuration ~/ radio;
+    });
+  }
+
+  double getDotPosition() {
+    return isDotDragging || totalDuration == 0 ? dotProgress : MediaQuery.of(context).size.width * (position / totalDuration);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    eventBus.on<PlayEvent>().listen((event) {
+      if (event.duration != null) {
+        setTotalDuration(event.duration!);
+      }
+      if (event.position != null) {
+        setPosition(event.position!);
+
+        if (!isDotDragging) {
+          setDotProgress(MediaQuery.of(context).size.width * (event.position! / totalDuration));
+        }
+      }
+      if (event.bufferedPosition != null) {
+        double loadedBuffer = MediaQuery.of(context).size.width * (event.bufferedPosition! / totalDuration);
+        setLoadedProgress(loadedBuffer);
+      }
+    });
   }
 
   @override
@@ -61,10 +117,13 @@ class _PlayProgressState extends State<PlayProgress> {
     return MouseRegion(
       cursor: MaterialStateMouseCursor.clickable,
       onEnter: (e) => setIsProgressHover(true),
-      onHover: (e) => setMouseX(e),
+      onHover: (e) {
+        setMouseX(e.position.dx);
+        setHoverDuration(e.position.dx);
+      },
       onExit: (e) => setIsProgressHover(false),
       child: GestureDetector(
-        onTap: () => onProgressTap(),
+        onTap: () => player.seek(hoverDuration),
         child: Column(
           children: [
             Container(
@@ -76,24 +135,29 @@ class _PlayProgressState extends State<PlayProgress> {
                 color: Colors.grey[800],
                 height: isProgressActivity() ? activeHeight : inactiveHeight,
                 child: Stack(clipBehavior: Clip.none, children: [
+                  // loaded progress
                   Container(
                     color: Colors.grey[600],
-                    width: 300,
+                    width: loadedProgress,
                   ),
+                  // current play progress
                   Container(
                     color: Theme.of(context).primaryColor,
-                    width: dotProgress,
+                    width: getDotPosition(),
                   ),
                   isProgressActivity()
+                    // dot
                       ? Positioned(
-                          top: isDotDrag ? -8 : -4,
-                          left: dotProgress - (isDotDrag ? 10 : 6),
-                          width: isDotDrag ? 20 : 12,
-                          height: isDotDrag ? 20 : 12,
+                          top: isDotDragging ? -8 : -4,
+                          left: getDotPosition() - (isDotDragging ? 10 : 6),
+                          width: isDotDragging ? 20 : 12,
+                          height: isDotDragging ? 20 : 12,
                           child: GestureDetector(
-                            onHorizontalDragDown: (e) => setIsDotDrag(true),
+                            onHorizontalDragDown: (e) => setIsDotDragging(true),
                             onHorizontalDragUpdate: (e) => onDotDrag(e),
                             onHorizontalDragEnd: (e) => onDotDragEnd(e),
+                            onTapDown: (e) => setIsDotDragging(true),
+                            onTapUp: (e) => setIsDotDragging(false),
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Theme.of(context).primaryColor,
@@ -102,18 +166,20 @@ class _PlayProgressState extends State<PlayProgress> {
                           ))
                       : Container(),
                   isProgressActivity()
+                    // current position text
                       ? Positioned(
                           top: -25,
-                          left: dotProgress,
+                          left: getDotPosition(),
                           child: FractionalTranslation(
                             translation: const Offset(-0.5, 0),
-                            child: Text('3:45 / 7:23',
+                            child: Text('${TimeConverter.formatMilliseconds(isDotDragging ? totalDuration * dotProgress ~/ MediaQuery.of(context).size.width : position)} / ${TimeConverter.formatMilliseconds(totalDuration)}',
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 12)),
                           ))
                       : Container(),
-                  (isProgressHover && !isDotDrag)
+                  (isProgressHover && !isDotDragging)
+                      // hover duration text
                       ? Positioned(
                           top: -25,
                           left: mouseX,
@@ -126,8 +192,8 @@ class _PlayProgressState extends State<PlayProgress> {
                                   color: Colors.grey[900],
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(2))),
-                              child: const Text('4:45',
-                                  style: TextStyle(
+                              child: Text(TimeConverter.formatMilliseconds(hoverDuration),
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 12)),
                             ),
                           ))

@@ -42,12 +42,17 @@ class _SearchResultState extends State<SearchResult> {
     _isSearchEnd = false;
   }
 
-  void setPageSource(List data) {
+  Future<void> setPageSource(List data) async {
     if (data.isEmpty) {
       if (_source == 'storage') {
         _source = 'netease';
       } else if (_source == 'netease') {
         _isSearchEnd = true;
+      }
+
+      if (!_isSearchEnd) {
+        await Future.delayed(const Duration(milliseconds: 10));
+        triggerSearch();
       }
     } else {
       _page++;
@@ -107,13 +112,18 @@ class _SearchResultState extends State<SearchResult> {
                         }),
                     if (snapshot.connectionState == ConnectionState.done &&
                         !_isSearchEnd)
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: OutlinedButton(
-                            onPressed: () {
-                              triggerSearch();
-                            },
-                            child: const Text('Search More')),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: OutlinedButton(
+                                onPressed: () {
+                                  triggerSearch();
+                                },
+                                child: const Text('Search More')),
+                          ),
+                        ],
                       ),
                     if (snapshot.connectionState == ConnectionState.waiting)
                       Row(
