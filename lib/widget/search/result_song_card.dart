@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../provider/music_player.dart';
 import '../../model/search_songs_model.dart';
 import '../../utils/time_converter.dart';
 
@@ -46,8 +47,12 @@ class _ResultSongCardState extends State<ResultSongCard> {
     }
 
     return GestureDetector(
-      onTap: () => {
-        // print(222)
+      onTap: () {
+        if (widget.song.url != null && widget.song.url!.isNotEmpty) {
+          final player = MusicPlayer();
+
+          player.play(widget.song.url!);
+        }
       },
       child: MouseRegion(
         cursor: MaterialStateMouseCursor.clickable,

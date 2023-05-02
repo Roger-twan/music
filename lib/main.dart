@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music/provider/music_player.dart';
 import 'provider/preferences.dart';
 import 'widget/bottom_bar/index.dart';
 import 'widget/search/index.dart';
@@ -8,6 +9,7 @@ import 'widget/upload/index.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences().init();
+  MusicPlayer().init();
   runApp(const MyApp());
 }
 
