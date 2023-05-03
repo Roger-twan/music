@@ -1,17 +1,50 @@
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model/search_songs_model.dart';
 import 'event_bus.dart';
+import 'preferences.dart';
 
 class MusicPlayer {
   final _player = AudioPlayer();
   late SongModel _playingSong;
+  late String _loopShuffleMode; // all,one,shuffle
 
   static final MusicPlayer _instance = MusicPlayer._internal();
   MusicPlayer._internal();
   factory MusicPlayer() => _instance;
 
   void init() {
-    _player.setLoopMode(LoopMode.one); //TODO: delete
+    setLoopShuffleMode();
+    _intListener();
+  }
+
+  void setLoopShuffleMode([String? mode]) async {
+    final SharedPreferences? preferences = Preferences().get();
+    if (mode == null) {
+      _loopShuffleMode = preferences?.getString('loopShuffleMode') ?? 'all';
+    } else {
+      _loopShuffleMode = mode;
+      await preferences?.setString('loopShuffleMode', mode);
+    }
+
+    switch (_loopShuffleMode) {
+      case 'all':
+        _player.setLoopMode(LoopMode.all);
+        _player.setShuffleModeEnabled(false);
+        break;
+      case 'one':
+        _player.setLoopMode(LoopMode.one);
+        break;
+      case 'shuffle':
+        _player.setLoopMode(LoopMode.all);
+        _player.setShuffleModeEnabled(true);
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _intListener() {
     _player.playerStateStream.listen((PlayerState state) {
       eventBus.fire(PlayEvent(isPlaying: state.playing));
     });
@@ -22,6 +55,9 @@ class MusicPlayer {
       eventBus.fire(PlayEvent(bufferedPosition: duration!.inMilliseconds));
     });
   }
+
+  SongModel getPlayingSong() => _playingSong;
+  String getLoopShuffleMode() => _loopShuffleMode;
 
   Future play([SongModel? song]) async {
     if (song != null) {
@@ -38,10 +74,6 @@ class MusicPlayer {
 
   Future seek(int ms) async {
     await _player.seek(Duration(milliseconds: ms));
-  }
-
-  SongModel getPlayingSong() {
-    return _playingSong;
   }
 
   void setLyric(String lyr) {

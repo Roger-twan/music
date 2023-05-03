@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../provider/event_bus.dart';
+import '../lyric/index.dart';
 import 'play_controller.dart';
 import 'play_progress.dart';
-import '../lyric/index.dart';
+import 'loop_shuffle.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -60,11 +61,7 @@ class _BottomBarState extends State<BottomBar> {
                         iconSize: 22,
                       ),
                       const PlayController(),
-                      IconButton(
-                        onPressed: () => {},
-                        icon: const Icon(Icons.repeat),
-                        iconSize: 22,
-                      )
+                      const LoopShuffle(),
                     ],
                   ),
                 )),
