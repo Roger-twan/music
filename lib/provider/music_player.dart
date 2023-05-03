@@ -11,6 +11,7 @@ class MusicPlayer {
   factory MusicPlayer() => _instance;
 
   void init() {
+    _player.setLoopMode(LoopMode.one); //TODO: delete
     _player.playerStateStream.listen((PlayerState state) {
       eventBus.fire(PlayEvent(isPlaying: state.playing));
     });
@@ -41,5 +42,9 @@ class MusicPlayer {
 
   SongModel getPlayingSong() {
     return _playingSong;
+  }
+
+  void setLyric(String lyr) {
+    _playingSong.lyric = lyr;
   }
 }

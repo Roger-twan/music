@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
+import '../../provider/event_bus.dart';
 import '../../utils/format_lyric.dart';
 
 class LyricWrapper extends CustomPainter {
   String lyricStr;
   double baseFontSize;
   LyricWrapper(this.lyricStr, this.baseFontSize);
+  int currentIndex = 0;
 
   @override
   void paint(Canvas canvas, Size size) {
-    List<Lyric> lyric = formatLyric(lyricStr);
+    List<Lyric> lyricList = formatLyric(lyricStr);
+    double middleHeight = size.height / 2 - 60;
     double y = 0;
-    int currentIndex = 4;
+
+    eventBus.on<PlayEvent>().listen((event) {
+      if (event.position != null) {
+        int curIndex = lyricList.indexWhere((lyric) {
+          if (lyric.endTime != null) {
+            int startPosition = lyric.startTime!.inMilliseconds;
+            int endPosition = lyric.endTime!.inMilliseconds;
+            return startPosition <= event.position! &&
+                endPosition >= event.position!;
+          } else {
+            return true;
+          }
+        });
+
+        currentIndex = curIndex > -1 ? curIndex : currentIndex;
+      }
+    });
 
     TextStyle commonStyle = TextStyle(
       color: Colors.grey[700],
@@ -29,36 +48,40 @@ class LyricWrapper extends CustomPainter {
       fontSize: baseFontSize * 0.5,
     );
 
-    for (int i = 0; i < lyric.length; i++) {
+    for (int i = 0; i < lyricList.length; i++) {
       TextStyle lyricStyle = commonStyle;
 
       if (isWithinIndex(i, currentIndex, 0)) {
         lyricStyle = primaryStyle;
+        y = middleHeight;
       } else if (isWithinIndex(i, currentIndex, 1)) {
         lyricStyle = secondaryStyle;
       } else if (isWithinIndex(i, currentIndex, 2)) {
         lyricStyle = tertiaryStyle;
       }
 
-      TextPainter textPainter = TextPainter(
-        text: TextSpan(
-          text: lyric[i].lyric,
-          style: lyricStyle,
-        ),
-        textDirection: TextDirection.ltr,
-      );
-      textPainter.layout();
+      y = middleHeight + (baseFontSize * 1.2 * (i - currentIndex));
 
-      y = i == 0 ? 0 : y + baseFontSize * 1.5;
+      if (y > 0 && y < size.height) {
+        TextPainter textPainter = TextPainter(
+          text: TextSpan(
+            text: lyricList[i].lyric,
+            style: lyricStyle,
+          ),
+          textDirection: TextDirection.ltr,
+        );
+        textPainter.layout();
 
-      final xCenter = (size.width - textPainter.width) / 2;
-      final offset = Offset(xCenter, y);
-      textPainter.paint(canvas, offset);
+        final xCenter = (size.width - textPainter.width) / 2;
+        final offset = Offset(xCenter, y);
+        textPainter.paint(canvas, offset);
+      }
     }
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  bool shouldRepaint(LyricWrapper oldDelegate) =>
+      oldDelegate.currentIndex != currentIndex;
 
   bool isWithinIndex(int index, int baseIndex, int range) {
     return (index == baseIndex + range) || (index == baseIndex - range);

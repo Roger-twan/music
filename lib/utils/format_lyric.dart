@@ -12,7 +12,7 @@ List<Lyric> formatLyric(String lyricStr) {
       lyricStr.split('\n').where((element) => reg.hasMatch(element)).toList();
 
   List<Lyric> result = realLyricStr.map((str) {
-    String time = str.substring(0, str.indexOf(']'));
+    String time = str.substring(0, str.indexOf(']')).replaceAll('-1', '');
     String lyric = str.substring(str.indexOf(']') + 1);
 
     time = str.substring(1, time.length - 1);
