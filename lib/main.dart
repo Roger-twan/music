@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:music/provider/music_player.dart';
+import 'provider/music_player.dart';
 import 'provider/preferences.dart';
 import 'widget/bottom_bar/index.dart';
 import 'widget/search/index.dart';
-import 'widget/left_drawer/index.dart';
-import 'widget/upload/index.dart';
+import 'widget/likes/index.dart';
+import 'widget/settings/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
         body: SearchScreen(),
         bottomNavigationBar: BottomBar(),
-        drawer: LeftDrawer(),
-        endDrawer: UploadDrawer(),
+        drawer: Likes(),
+        endDrawer: Settings(),
       ),
     );
   }

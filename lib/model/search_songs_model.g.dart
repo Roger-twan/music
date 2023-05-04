@@ -25,7 +25,7 @@ SongModel _$SongModelFromJson(Map<String, dynamic> json) => SongModel(
       artist: json['artist'] as String,
       url: json['url'] as String?,
       source: json['source'] as String,
-      duration: json['duration'] as int,
+      duration: json['duration'] as int?,
       lyric: json['lyric'] as String?,
       originId: json['origin_id'] as String?,
       key: json['key'] as String?,

@@ -30,7 +30,7 @@ class _ResultSongCardState extends State<ResultSongCard> {
     if (sourceType == 'storage') {
       icon = const Icon(Icons.rocket_sharp);
       subTitle +=
-          ' · ${TimeConverter.formatMilliseconds(widget.song.duration)}';
+          ' · ${TimeConverter.formatMilliseconds(widget.song.duration!)}';
     } else if (sourceType == 'netease') {
       icon = SvgPicture.asset(
         'lib/assets/netEase.svg',

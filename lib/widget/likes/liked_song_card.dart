@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PlaylistSongCard extends StatefulWidget {
-  const PlaylistSongCard({super.key});
+class LikedSongCard extends StatefulWidget {
+  const LikedSongCard({super.key});
 
   @override
-  State<PlaylistSongCard> createState() => _PlaylistSongCardState();
+  State<LikedSongCard> createState() => _LikedSongCardState();
 }
 
-class _PlaylistSongCardState extends State<PlaylistSongCard> {
+class _LikedSongCardState extends State<LikedSongCard> {
   bool isCardHover = false;
 
   void setIsCardHover(bool value) {

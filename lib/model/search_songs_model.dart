@@ -20,7 +20,7 @@ class SongModel {
   final String artist;
   String? url;
   final String source;
-  final int duration;
+  int? duration;
   String? lyric;
   @JsonKey(name: 'origin_id')
   String? originId;
@@ -32,7 +32,7 @@ class SongModel {
     required this.artist,
     this.url,
     required this.source,
-    required this.duration,
+    this.duration,
     this.lyric,
     this.originId,
     this.key,

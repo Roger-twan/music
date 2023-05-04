@@ -8,11 +8,6 @@ class SearchEvent {
   SearchEvent(this.keywords);
 }
 
-enum OpenDrawerEvent {
-  playlist,
-  settings,
-}
-
 class PlayEvent {
   bool? isPlaying;
   int? duration;

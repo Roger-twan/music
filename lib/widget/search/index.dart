@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../provider/event_bus.dart';
+import 'package:music/widget/logo/index.dart';
 import 'search_bar.dart';
 import 'result.dart';
 
@@ -18,13 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IconButton(
-              onPressed: () async => {
-                    Scaffold.of(context).openDrawer(),
-                    await Future.delayed(const Duration(milliseconds: 10)),
-                    eventBus.fire(OpenDrawerEvent.settings),
-                  },
-              icon: const Icon(Icons.settings)),
+          const Logo(),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -36,10 +30,10 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           const SizedBox(width: 10),
           IconButton(
-              onPressed: () => {
+              onPressed: () async => {
                     Scaffold.of(context).openEndDrawer(),
                   },
-              icon: const Icon(Icons.cloud_upload))
+              icon: const Icon(Icons.settings)),
         ],
       ),
     );

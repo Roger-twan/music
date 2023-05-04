@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../provider/event_bus.dart';
 import '../lyric/index.dart';
 import 'play_controller.dart';
 import 'play_progress.dart';
@@ -53,9 +52,6 @@ class _BottomBarState extends State<BottomBar> {
                       IconButton(
                         onPressed: () async => {
                           Scaffold.of(context).openDrawer(),
-                          await Future.delayed(
-                              const Duration(milliseconds: 10)),
-                          eventBus.fire(OpenDrawerEvent.playlist),
                         },
                         icon: const Icon(Icons.queue_music),
                         iconSize: 22,
