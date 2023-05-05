@@ -44,7 +44,6 @@ class _PlayControllerState extends State<PlayController> {
     return Row(
       children: [
         IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_previous)),
-
         if (playState == 'loading')
           Container(
             padding: const EdgeInsets.all(16),
@@ -54,7 +53,6 @@ class _PlayControllerState extends State<PlayController> {
               child: CircularProgressIndicator(color: Colors.grey),
             ),
           ),
-        
         if (playState == 'ready')
           IconButton(
             onPressed: () {
