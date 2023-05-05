@@ -27,7 +27,7 @@ class _LikeButtonState extends State<LikeButton> {
   @override
   void initState() {
     super.initState();
-  
+
     curSong = null;
 
     eventBus.on<PlayEvent>().listen((event) {
@@ -40,10 +40,9 @@ class _LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => toggleLike(),
-      iconSize: 22,
-      icon: Icon(isLiked ? Icons.favorite : Icons.favorite_outline)
-    );
+        onPressed: () => toggleLike(),
+        iconSize: 22,
+        icon: Icon(isLiked ? Icons.favorite : Icons.favorite_outline));
   }
 
   void toggleLike() async {
@@ -68,10 +67,8 @@ class _LikeButtonState extends State<LikeButton> {
   }
 
   Future<SongModel> syncSong(SongModel? song) async {
-    final response = await dioClient().post(
-      '/song/sync',
-      data: curSong?.toJson()
-    );
+    final response =
+        await dioClient().post('/song/sync', data: curSong?.toJson());
 
     return SongModel.fromJson(response.data);
   }
