@@ -20,7 +20,7 @@ class _PlayProgressState extends State<PlayProgress> {
   int totalDuration = 0;
   int hoverDuration = 0;
   int position = 0;
-  double loadedProgress = 0;
+  double loadedRadio = 0;
   final player = MusicPlayer();
 
   bool isProgressActivity() {
@@ -63,9 +63,9 @@ class _PlayProgressState extends State<PlayProgress> {
     });
   }
 
-  void setLoadedProgress(double value) {
+  void setLoadedRadio(double value) {
     setState(() {
-      loadedProgress = value;
+      loadedRadio = value;
     });
   }
 
@@ -98,7 +98,7 @@ class _PlayProgressState extends State<PlayProgress> {
     super.initState();
 
     eventBus.on<PlayEvent>().listen((event) {
-      if (event.isActive != null && event.isActive!) {
+      if (event.state != null && event.state == 'ready') {
         setTotalDuration(player.getPlayingSong().duration!);
       }
       if (event.position != null) {
@@ -109,10 +109,8 @@ class _PlayProgressState extends State<PlayProgress> {
               (event.position! / totalDuration));
         }
       }
-      if (event.bufferedPosition != null) {
-        double loadedBuffer = MediaQuery.of(context).size.width *
-            (event.bufferedPosition! / totalDuration);
-        setLoadedProgress(loadedBuffer);
+      if (event.bufferedPosition != null && totalDuration != 0) {
+        setLoadedRadio(event.bufferedPosition! / totalDuration);
       }
     });
   }
@@ -143,7 +141,7 @@ class _PlayProgressState extends State<PlayProgress> {
                   // loaded progress
                   Container(
                     color: Colors.grey[600],
-                    width: loadedProgress,
+                    width: MediaQuery.of(context).size.width * loadedRadio,
                   ),
                   // current play progress
                   Container(

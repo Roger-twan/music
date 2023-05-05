@@ -48,6 +48,13 @@ class MusicPlayer {
     _player.playerStateStream.listen((PlayerState state) {
       eventBus.fire(PlayEvent(isPlaying: state.playing));
     });
+    _player.processingStateStream.listen((ProcessingState state) {
+      if (state == ProcessingState.idle) {
+        eventBus.fire(PlayEvent(state: 'loading'));
+      } else if (state == ProcessingState.ready) {
+        eventBus.fire(PlayEvent(state: 'ready'));
+      }
+    });
     _player.positionStream.listen((Duration? duration) {
       eventBus.fire(PlayEvent(position: duration!.inMilliseconds));
     });
@@ -64,7 +71,6 @@ class MusicPlayer {
       _playingSong = song;
       final duration = await _player.setUrl(song.url!);
       _playingSong.duration = song.duration ?? duration?.inMilliseconds;
-      eventBus.fire(PlayEvent(isActive: true));
     }
     _player.play();
   }

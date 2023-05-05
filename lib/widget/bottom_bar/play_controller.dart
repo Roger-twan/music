@@ -11,10 +11,17 @@ class PlayController extends StatefulWidget {
 
 class _PlayControllerState extends State<PlayController> {
   bool isPlaying = false;
+  String playState = 'ready';
 
   void setIsPlaying(bool value) {
     setState(() {
       isPlaying = value;
+    });
+  }
+
+  void setPlayState(String value) {
+    setState(() {
+      playState = value;
     });
   }
 
@@ -26,6 +33,9 @@ class _PlayControllerState extends State<PlayController> {
       if (event.isPlaying != null) {
         setIsPlaying(event.isPlaying!);
       }
+      if (event.state != null) {
+        setPlayState(event.state!);
+      }
     });
   }
 
@@ -34,15 +44,27 @@ class _PlayControllerState extends State<PlayController> {
     return Row(
       children: [
         IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_previous)),
-        IconButton(
-          onPressed: () {
-            final player = MusicPlayer();
 
-            isPlaying ? player.pause() : player.play();
-          },
-          icon: Icon(isPlaying ? Icons.pause_outlined : Icons.play_arrow),
-          iconSize: 40,
-        ),
+        if (playState == 'loading')
+          Container(
+            padding: const EdgeInsets.all(16),
+            child: const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(color: Colors.grey),
+            ),
+          ),
+        
+        if (playState == 'ready')
+          IconButton(
+            onPressed: () {
+              final player = MusicPlayer();
+
+              isPlaying ? player.pause() : player.play();
+            },
+            icon: Icon(isPlaying ? Icons.pause_outlined : Icons.play_arrow),
+            iconSize: 40,
+          ),
         IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_next)),
       ],
     );

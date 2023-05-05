@@ -30,7 +30,7 @@ class _LyricScreenState extends State<LyricScreen> {
 
     if (mounted) {
       eventBus.on<PlayEvent>().listen((event) {
-        if (event.isActive != null && event.isActive!) {
+        if (event.state != null && event.state == 'ready') {
           setSong(MusicPlayer().getPlayingSong());
         }
       });

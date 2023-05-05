@@ -31,7 +31,7 @@ class _LikeButtonState extends State<LikeButton> {
     curSong = null;
 
     eventBus.on<PlayEvent>().listen((event) {
-      if (event.isActive != null && event.isActive!) {
+      if (event.state != null && event.state == 'ready') {
         curSong = player.getPlayingSong();
       }
     });
