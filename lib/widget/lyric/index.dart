@@ -14,24 +14,13 @@ class LyricScreen extends StatefulWidget {
 }
 
 class _LyricScreenState extends State<LyricScreen> {
-  SongModel song = MusicPlayer().getPlayingSong();
+  SongModel curSong = MusicPlayer().getPlayingSong();
 
   void setSong(SongModel value) {
     if (mounted) {
       setState(() {
-        song = value;
+        curSong = value;
       });
-    }
-  }
-
-  Future<LyricModel> searchLyric() async {
-    if (song.lyric != null) {
-      return LyricModel.fromJson({'lyric': song.lyric, 'source': song.source});
-    } else {
-      final response = await dioClient().get('/lyric/get',
-          queryParameters: {'id': song.id, 'source': song.source});
-
-      return LyricModel.fromJson(response.data);
     }
   }
 
@@ -41,7 +30,7 @@ class _LyricScreenState extends State<LyricScreen> {
 
     if (mounted) {
       eventBus.on<PlayEvent>().listen((event) {
-        if (event.duration != null) {
+        if (event.isActive != null && event.isActive!) {
           setSong(MusicPlayer().getPlayingSong());
         }
       });
@@ -66,13 +55,13 @@ class _LyricScreenState extends State<LyricScreen> {
       width: double.infinity,
       child: Column(
         children: [
-          Text(song.name,
+          Text(curSong.name,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: baseFontSize,
                 color: Colors.white,
               )),
-          Text(song.artist,
+          Text(curSong.artist,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: baseFontSize * 0.6,
@@ -82,7 +71,7 @@ class _LyricScreenState extends State<LyricScreen> {
                   padding: const EdgeInsets.only(top: 50),
                   width: double.infinity,
                   child: FutureBuilder<LyricModel>(
-                      future: searchLyric(),
+                      future: searchLyric(curSong),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           String lyr = snapshot.data?.lyric ?? '';
@@ -116,5 +105,16 @@ class _LyricScreenState extends State<LyricScreen> {
         ],
       ),
     );
+  }
+}
+
+Future<LyricModel> searchLyric(SongModel song) async {
+  if (song.lyric != null) {
+    return LyricModel.fromJson({'lyric': song.lyric, 'source': song.source});
+  } else {
+    final response = await dioClient().get('/lyric/get',
+        queryParameters: {'id': song.id, 'source': song.source});
+
+    return LyricModel.fromJson(response.data);
   }
 }

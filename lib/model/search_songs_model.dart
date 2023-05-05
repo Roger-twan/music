@@ -23,8 +23,7 @@ class SongModel {
   int? duration;
   String? lyric;
   @JsonKey(name: 'origin_id')
-  String? originId;
-  String? key;
+  int? originId;
 
   SongModel({
     required this.id,
@@ -33,9 +32,8 @@ class SongModel {
     this.url,
     required this.source,
     this.duration,
-    this.lyric,
     this.originId,
-    this.key,
+    this.lyric,
   });
 
   factory SongModel.fromJson(Map<String, dynamic> json) =>

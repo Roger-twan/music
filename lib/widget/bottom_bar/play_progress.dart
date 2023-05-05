@@ -98,8 +98,8 @@ class _PlayProgressState extends State<PlayProgress> {
     super.initState();
 
     eventBus.on<PlayEvent>().listen((event) {
-      if (event.duration != null) {
-        setTotalDuration(event.duration!);
+      if (event.isActive != null && event.isActive!) {
+        setTotalDuration(player.getPlayingSong().duration!);
       }
       if (event.position != null) {
         setPosition(event.position!);

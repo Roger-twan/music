@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music/widget/bottom_bar/like_button.dart';
 import '../lyric/index.dart';
 import 'play_controller.dart';
 import 'play_progress.dart';
@@ -57,7 +58,12 @@ class _BottomBarState extends State<BottomBar> {
                         iconSize: 22,
                       ),
                       const PlayController(),
-                      const LoopShuffle(),
+                      Row(
+                        children: const [
+                          LikeButton(),
+                          LoopShuffle(),
+                        ],
+                      )
                     ],
                   ),
                 )),

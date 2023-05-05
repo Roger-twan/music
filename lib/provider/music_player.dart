@@ -64,7 +64,7 @@ class MusicPlayer {
       _playingSong = song;
       final duration = await _player.setUrl(song.url!);
       _playingSong.duration = duration!.inMilliseconds;
-      eventBus.fire(PlayEvent(duration: duration.inMilliseconds));
+      eventBus.fire(PlayEvent(isActive: true));
     }
     _player.play();
   }

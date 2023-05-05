@@ -27,8 +27,7 @@ SongModel _$SongModelFromJson(Map<String, dynamic> json) => SongModel(
       source: json['source'] as String,
       duration: json['duration'] as int?,
       lyric: json['lyric'] as String?,
-      originId: json['origin_id'] as String?,
-      key: json['key'] as String?,
+      originId: json['origin_id'] as int?,
     );
 
 Map<String, dynamic> _$SongModelToJson(SongModel instance) => <String, dynamic>{
@@ -40,5 +39,4 @@ Map<String, dynamic> _$SongModelToJson(SongModel instance) => <String, dynamic>{
       'duration': instance.duration,
       'lyric': instance.lyric,
       'origin_id': instance.originId,
-      'key': instance.key,
     };

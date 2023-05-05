@@ -10,13 +10,13 @@ class SearchEvent {
 
 class PlayEvent {
   bool? isPlaying;
-  int? duration;
+  bool? isActive;
   int? position;
   int? bufferedPosition;
 
   PlayEvent({
     this.isPlaying,
-    this.duration,
+    this.isActive,
     this.position,
     this.bufferedPosition,
   });
