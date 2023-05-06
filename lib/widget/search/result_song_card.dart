@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../provider/music_player.dart';
-import '../../model/search_songs_model.dart';
+import '../../model/songs_model.dart';
 import '../../utils/time_converter.dart';
 
 class ResultSongCard extends StatefulWidget {

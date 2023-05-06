@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../model/search_songs_model.dart';
+import '../../model/songs_model.dart';
 import '../../provider/dio_client.dart';
 import '../../provider/event_bus.dart';
 import 'result_song_card.dart';
@@ -12,21 +12,21 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
-  Future<SearchSongsModel>? _searchSongs;
+  Future<SongListModel>? _searchSongs;
   List<SongModel> _list = [];
   String _searchKeywords = '';
   int _page = 1;
   String _source = 'storage';
   bool _isSearchEnd = false;
 
-  Future<SearchSongsModel> searchSongs() async {
+  Future<SongListModel> searchSongs() async {
     final response = await dioClient().get('/song/search', queryParameters: {
       'keywords': _searchKeywords,
       'source': _source,
       'page': _page
     });
 
-    return SearchSongsModel.fromJson(response.data);
+    return SongListModel.fromJson(response.data);
   }
 
   void triggerSearch() {
@@ -80,7 +80,7 @@ class _SearchResultState extends State<SearchResult> {
       child: Column(
         children: [
           Expanded(
-            child: FutureBuilder<SearchSongsModel>(
+            child: FutureBuilder<SongListModel>(
                 future: _searchSongs,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {

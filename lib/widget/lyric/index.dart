@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music/model/lyric_model.dart';
 import 'package:music/provider/music_player.dart';
-import '../../model/search_songs_model.dart';
+import '../../model/songs_model.dart';
 import '../../provider/dio_client.dart';
 import '../../provider/event_bus.dart';
 import 'lyric_wrapper.dart';
@@ -14,7 +14,7 @@ class LyricScreen extends StatefulWidget {
 }
 
 class _LyricScreenState extends State<LyricScreen> {
-  SongModel curSong = MusicPlayer().getPlayingSong();
+  SongModel? curSong = MusicPlayer().getPlayingSong();
 
   void setSong(SongModel value) {
     if (mounted) {
@@ -31,7 +31,7 @@ class _LyricScreenState extends State<LyricScreen> {
     if (mounted) {
       eventBus.on<PlayEvent>().listen((event) {
         if (event.state != null && event.state == 'ready') {
-          setSong(MusicPlayer().getPlayingSong());
+          setSong(MusicPlayer().getPlayingSong()!);
         }
       });
     }
@@ -55,13 +55,13 @@ class _LyricScreenState extends State<LyricScreen> {
       width: double.infinity,
       child: Column(
         children: [
-          Text(curSong.name,
+          Text(curSong?.name ?? '',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: baseFontSize,
                 color: Colors.white,
               )),
-          Text(curSong.artist,
+          Text(curSong?.artist ?? '',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: baseFontSize * 0.6,
@@ -108,12 +108,12 @@ class _LyricScreenState extends State<LyricScreen> {
   }
 }
 
-Future<LyricModel> searchLyric(SongModel song) async {
-  if (song.lyric != null) {
-    return LyricModel.fromJson({'lyric': song.lyric, 'source': song.source});
+Future<LyricModel> searchLyric(SongModel? song) async {
+  if (song?.lyric != null) {
+    return LyricModel.fromJson({'lyric': song?.lyric, 'source': song?.source});
   } else {
     final response = await dioClient().get('/lyric/get',
-        queryParameters: {'id': song.id, 'source': song.source});
+        queryParameters: {'id': song?.id, 'source': song?.source});
 
     return LyricModel.fromJson(response.data);
   }

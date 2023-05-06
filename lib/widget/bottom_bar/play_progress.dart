@@ -99,7 +99,10 @@ class _PlayProgressState extends State<PlayProgress> {
 
     eventBus.on<PlayEvent>().listen((event) {
       if (event.state != null && event.state == 'ready') {
-        setTotalDuration(player.getPlayingSong().duration!);
+        final playingSong = player.getPlayingSong();
+        if (playingSong != null && playingSong.duration != null) {
+          setTotalDuration(playingSong.duration!);
+        }
       }
       if (event.position != null) {
         setPosition(event.position!);
@@ -109,7 +112,9 @@ class _PlayProgressState extends State<PlayProgress> {
               (event.position! / totalDuration));
         }
       }
-      if (event.bufferedPosition != null && totalDuration != 0) {
+      if (event.bufferedPosition != null &&
+          !totalDuration.isNaN &&
+          totalDuration != 0) {
         setLoadedRadio(event.bufferedPosition! / totalDuration);
       }
     });

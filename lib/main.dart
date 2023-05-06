@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music/provider/likes_song.dart';
 import 'provider/music_player.dart';
 import 'provider/preferences.dart';
 import 'widget/bottom_bar/index.dart';
@@ -9,6 +10,7 @@ import 'widget/settings/index.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences().init();
+  await LikesSong().init();
   MusicPlayer().init();
   runApp(const MyApp());
 }

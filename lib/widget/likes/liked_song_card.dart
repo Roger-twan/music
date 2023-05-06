@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:music/provider/music_player.dart';
+import '../../model/songs_model.dart';
+import '../../utils/time_converter.dart';
 
 class LikedSongCard extends StatefulWidget {
-  const LikedSongCard({super.key});
+  final SongModel song;
+  const LikedSongCard({Key? key, required this.song}) : super(key: key);
 
   @override
   State<LikedSongCard> createState() => _LikedSongCardState();
@@ -19,9 +23,7 @@ class _LikedSongCardState extends State<LikedSongCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {
-        // print(222)
-      },
+      onTap: () => MusicPlayer().play(widget.song),
       child: MouseRegion(
         cursor: MaterialStateMouseCursor.clickable,
         onEnter: (e) => setIsCardHover(true),
@@ -40,13 +42,14 @@ class _LikedSongCardState extends State<LikedSongCard> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('Hotel California',
-                            style: TextStyle(color: Colors.white)),
-                        Text('Eagle')
+                      children: [
+                        Text(widget.song.name,
+                            style: const TextStyle(color: Colors.white)),
+                        Text(widget.song.artist)
                       ],
                     ),
-                    const Text('7:34'),
+                    Text(TimeConverter.formatMilliseconds(
+                        widget.song.duration!)),
                   ],
                 ),
               ],

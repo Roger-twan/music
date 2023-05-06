@@ -1,16 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'search_songs_model.g.dart';
+part 'songs_model.g.dart';
 
 @JsonSerializable()
-class SearchSongsModel {
+class SongListModel {
   List<SongModel?> result;
 
-  SearchSongsModel(this.result);
+  SongListModel(this.result);
 
-  factory SearchSongsModel.fromJson(Map<String, dynamic> json) =>
-      _$SearchSongsModelFromJson(json);
-  Map<String, dynamic> toJson() => _$SearchSongsModelToJson(this);
+  factory SongListModel.fromJson(Map<String, dynamic> json) =>
+      _$SongListModelFromJson(json);
+  Map<String, dynamic> toJson() => _$SongListModelToJson(this);
 }
 
 @JsonSerializable()
@@ -24,17 +24,18 @@ class SongModel {
   String? lyric;
   @JsonKey(name: 'origin_id')
   int? originId;
+  int? like;
 
-  SongModel({
-    required this.id,
-    required this.name,
-    required this.artist,
-    this.url,
-    required this.source,
-    this.duration,
-    this.originId,
-    this.lyric,
-  });
+  SongModel(
+      {required this.id,
+      required this.name,
+      required this.artist,
+      this.url,
+      required this.source,
+      this.duration,
+      this.originId,
+      this.lyric,
+      this.like});
 
   factory SongModel.fromJson(Map<String, dynamic> json) =>
       _$SongModelFromJson(json);

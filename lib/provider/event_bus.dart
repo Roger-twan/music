@@ -21,3 +21,9 @@ class PlayEvent {
     this.bufferedPosition,
   });
 }
+
+class LikesSongUpdateEvent {
+  bool? updated;
+
+  LikesSongUpdateEvent(this.updated);
+}

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../model/lyric_model.dart';
-import '../../model/search_songs_model.dart';
+import '../../model/songs_model.dart';
+import '../../provider/likes_song.dart';
 import '../../provider/dio_client.dart';
 import '../../provider/event_bus.dart';
 import '../../provider/music_player.dart';
+import '../_common/toast.dart';
 import '../lyric/index.dart';
 
 class LikeButton extends StatefulWidget {
@@ -15,24 +17,31 @@ class LikeButton extends StatefulWidget {
 
 class _LikeButtonState extends State<LikeButton> {
   late SongModel? curSong;
-  late bool isLiked = false;
   final player = MusicPlayer();
+  final likesSong = LikesSong();
 
-  void setIsLiked(bool value) {
-    setState(() {
-      isLiked = value;
-    });
+  void setCurSong(SongModel? song) {
+    if (mounted) {
+      setState(() {
+        curSong = song;
+      });
+    }
+  }
+
+  void setLike(bool value) {
+    curSong?.like = value ? 1 : 0;
+    setCurSong(curSong);
   }
 
   @override
   void initState() {
     super.initState();
 
-    curSong = null;
+    setCurSong(null);
 
     eventBus.on<PlayEvent>().listen((event) {
       if (event.state != null && event.state == 'ready') {
-        curSong = player.getPlayingSong();
+        setCurSong(player.getPlayingSong());
       }
     });
   }
@@ -42,17 +51,15 @@ class _LikeButtonState extends State<LikeButton> {
     return IconButton(
         onPressed: () => toggleLike(),
         iconSize: 22,
-        icon: Icon(isLiked ? Icons.favorite : Icons.favorite_outline));
+        icon:
+            Icon(curSong?.like == 1 ? Icons.favorite : Icons.favorite_outline));
   }
 
   void toggleLike() async {
     if (curSong == null) return;
 
-    setIsLiked(!isLiked);
-
-    if (isLiked) {
-      // remove from likes
-    } else {
+    setLike(curSong?.like != 1);
+    if (curSong?.like == 1) {
       if (curSong?.source != 'storage') {
         if (curSong?.lyric == null) {
           LyricModel lyric = await searchLyric(curSong!);
@@ -60,9 +67,29 @@ class _LikeButtonState extends State<LikeButton> {
           curSong?.lyric = lyr;
           player.setLyric(lyr);
         }
-        syncSong(curSong);
+        curSong = await syncSong(curSong);
       }
-      // add to likes
+
+      bool isAdded = await likesSong.add(curSong!);
+
+      if (!isAdded) {
+        setLike(false);
+      }
+
+      if (mounted) {
+        showToast(context, isAdded ? 'Successfully added' : 'Add failed');
+      }
+    } else {
+      bool isRemoved = await likesSong.remove(curSong!.id);
+
+      if (!isRemoved) {
+        setLike(true);
+      }
+
+      if (mounted) {
+        showToast(
+            context, isRemoved ? 'Successfully removed' : 'Remove failed');
+      }
     }
   }
 

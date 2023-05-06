@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import '../../provider/event_bus.dart';
+import '../../provider/likes_song.dart';
+import '../../model/songs_model.dart';
+import '../_common/toast.dart';
 import 'liked_song_card.dart';
 
 class Likes extends StatefulWidget {
@@ -10,6 +13,30 @@ class Likes extends StatefulWidget {
 }
 
 class _LikesState extends State<Likes> {
+  final likesSong = LikesSong();
+  List<SongModel?>? list;
+
+  void initList() {
+    if (mounted) {
+      setState(() {
+        list = likesSong.getList().reversed.toList();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    initList();
+
+    eventBus.on<LikesSongUpdateEvent>().listen((event) {
+      if (event.updated != null && event.updated!) {
+        initList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -20,36 +47,38 @@ class _LikesState extends State<Likes> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Likes',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Likes',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                      )),
+                  const SizedBox(width: 6),
+                  Text(list?.length.toString() ?? '',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      )),
+                ],
+              ),
               const SizedBox(height: 20),
               Expanded(
                   child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: list?.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Slidable(
-                          key: ValueKey(index),
-                          endActionPane: ActionPane(
-                            motion: const DrawerMotion(),
-                            children: [
-                              SlidableAction(
-                                onPressed: (context) => {
-                                  // print('delete')
-                                },
-                                backgroundColor: Theme.of(context).primaryColor,
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete,
-                              ),
-                            ],
-                          ),
-                          child: const LikedSongCard(),
-                        );
+                        return LikedSongCard(song: list![index]!);
                       }))
             ],
           ),
         ));
+  }
+
+  Future<void> removeSong(int id) async {
+    bool isRemoved = await likesSong.remove(id);
+    if (mounted) {
+      showToast(context, isRemoved ? 'Successfully removed' : 'Remove failed');
+    }
   }
 }

@@ -27,7 +27,7 @@ class _LoopShuffleState extends State<LoopShuffle> {
   void initState() {
     super.initState();
 
-    loopShuffleMode = player.getLoopShuffleMode();
+    loopShuffleMode = player.getLoopMode() ?? '';
   }
 
   @override
@@ -51,7 +51,7 @@ class _LoopShuffleState extends State<LoopShuffle> {
         }
 
         setLoopShuffleMode(nextMode);
-        player.setLoopShuffleMode(nextMode);
+        player.setLoopMode(nextMode);
       },
       icon: modeIconMap[loopShuffleMode]!,
       iconSize: 22,

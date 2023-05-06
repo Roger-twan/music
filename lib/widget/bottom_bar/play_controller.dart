@@ -12,6 +12,7 @@ class PlayController extends StatefulWidget {
 class _PlayControllerState extends State<PlayController> {
   bool isPlaying = false;
   String playState = 'ready';
+  final player = MusicPlayer();
 
   void setIsPlaying(bool value) {
     setState(() {
@@ -43,7 +44,9 @@ class _PlayControllerState extends State<PlayController> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_previous)),
+        IconButton(
+            onPressed: () => player.previous(),
+            icon: const Icon(Icons.skip_previous)),
         if (playState == 'loading')
           Container(
             padding: const EdgeInsets.all(16),
@@ -55,15 +58,12 @@ class _PlayControllerState extends State<PlayController> {
           ),
         if (playState == 'ready')
           IconButton(
-            onPressed: () {
-              final player = MusicPlayer();
-
-              isPlaying ? player.pause() : player.play();
-            },
+            onPressed: () => isPlaying ? player.pause() : player.play(),
             icon: Icon(isPlaying ? Icons.pause_outlined : Icons.play_arrow),
             iconSize: 40,
           ),
-        IconButton(onPressed: () => {}, icon: const Icon(Icons.skip_next)),
+        IconButton(
+            onPressed: () => player.next(), icon: const Icon(Icons.skip_next)),
       ],
     );
   }
