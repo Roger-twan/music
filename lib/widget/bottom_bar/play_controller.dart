@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music/provider/music_player.dart';
+import '../../provider/music_player.dart';
 import '../../provider/event_bus.dart';
 
 class PlayController extends StatefulWidget {

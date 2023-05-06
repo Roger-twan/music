@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music/provider/music_player.dart';
+import '../../provider/music_player.dart';
 import '../../model/songs_model.dart';
 import '../../utils/time_converter.dart';
 

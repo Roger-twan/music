@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music/widget/logo/index.dart';
+import '../logo/index.dart';
 import 'search_bar.dart';
 import 'result.dart';
 

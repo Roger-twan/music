@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music/model/lyric_model.dart';
-import 'package:music/provider/music_player.dart';
+import '../../model/lyric_model.dart';
+import '../../provider/music_player.dart';
 import '../../model/songs_model.dart';
 import '../../provider/dio_client.dart';
 import '../../provider/event_bus.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music/provider/likes_song.dart';
+import 'provider/likes_song.dart';
 import 'provider/music_player.dart';
 import 'provider/preferences.dart';
 import 'widget/bottom_bar/index.dart';
