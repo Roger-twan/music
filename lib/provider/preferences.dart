@@ -11,8 +11,7 @@ class Preferences {
     if (_sharedPreferences == null) {
       _sharedPreferences = await SharedPreferences.getInstance();
       await _sharedPreferences?.setStringList('searchHistory', []);
-      await _sharedPreferences?.setDouble('cacheAmount', 1);
-      await _sharedPreferences?.setString('loopShuffleMode', 'all');
+      await _sharedPreferences?.setString('loopMode', 'all');
     }
   }
 

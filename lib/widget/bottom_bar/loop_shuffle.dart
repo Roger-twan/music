@@ -9,7 +9,7 @@ class LoopShuffle extends StatefulWidget {
 }
 
 class _LoopShuffleState extends State<LoopShuffle> {
-  String loopShuffleMode = '';
+  String loopMode = '';
   final MusicPlayer player = MusicPlayer();
   final Map<String, Icon> modeIconMap = {
     'all': const Icon(Icons.repeat),
@@ -17,9 +17,9 @@ class _LoopShuffleState extends State<LoopShuffle> {
     'shuffle': const Icon(Icons.shuffle),
   };
 
-  void setLoopShuffleMode(String value) {
+  void setLoopMode(String value) {
     setState(() {
-      loopShuffleMode = value;
+      loopMode = value;
     });
   }
 
@@ -27,7 +27,7 @@ class _LoopShuffleState extends State<LoopShuffle> {
   void initState() {
     super.initState();
 
-    loopShuffleMode = player.getLoopMode() ?? '';
+    loopMode = player.getLoopMode() ?? '';
   }
 
   @override
@@ -36,7 +36,7 @@ class _LoopShuffleState extends State<LoopShuffle> {
       onPressed: () {
         String nextMode = '';
 
-        switch (loopShuffleMode) {
+        switch (loopMode) {
           case 'all':
             nextMode = 'one';
             break;
@@ -50,10 +50,10 @@ class _LoopShuffleState extends State<LoopShuffle> {
             break;
         }
 
-        setLoopShuffleMode(nextMode);
+        setLoopMode(nextMode);
         player.setLoopMode(nextMode);
       },
-      icon: modeIconMap[loopShuffleMode]!,
+      icon: modeIconMap[loopMode]!,
       iconSize: 22,
     );
   }

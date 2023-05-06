@@ -39,4 +39,8 @@ class SearchHistory {
 
     await _preferences?.setStringList('searchHistory', list);
   }
+
+  Future<void> clear() async {
+    await _preferences?.remove('searchHistory');
+  }
 }
