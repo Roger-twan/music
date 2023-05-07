@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../provider/event_bus.dart';
 import '../../provider/likes_song.dart';
@@ -47,6 +48,8 @@ class _LikesState extends State<Likes> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (Platform.isIOS)
+                SizedBox(height: MediaQuery.of(context).padding.top),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -69,7 +72,9 @@ class _LikesState extends State<Likes> {
                       itemCount: list?.length,
                       itemBuilder: (BuildContext context, int index) {
                         return LikedSongCard(song: list![index]!);
-                      }))
+                      })),
+              if (Platform.isIOS)
+                SizedBox(height: MediaQuery.of(context).padding.bottom),
             ],
           ),
         ));

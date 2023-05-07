@@ -74,7 +74,9 @@ class MusicPlayer {
     if (song != null) {
       _playingSong = song;
       final duration = await _player.setUrl(song.url!);
-      _playingSong?.duration = duration?.inMilliseconds ?? song.duration;
+      _playingSong?.duration = duration == null || duration.inMilliseconds == 0
+          ? song.duration
+          : duration.inMilliseconds;
       _playingSongIndex = _likesSongList
           .indexWhere((SongModel? likedSong) => likedSong?.id == song.id);
     }

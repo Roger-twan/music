@@ -76,7 +76,7 @@ class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.fromLTRB(4, 10, 6, 10),
       child: Column(
         children: [
           Expanded(
@@ -95,21 +95,23 @@ class _SearchResultState extends State<SearchResult> {
                     return Text(snapshot.error.toString());
                   }
                   return ListView(children: [
-                    GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisExtent: 64,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 30,
-                          crossAxisCount:
-                              (MediaQuery.of(context).size.width ~/ 300)
-                                  .toInt(),
-                        ),
-                        itemCount: _list.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ResultSongCard(song: _list[index]);
-                        }),
+                    if (_list.isNotEmpty)
+                      GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 64,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 30,
+                            crossAxisCount:
+                                (MediaQuery.of(context).size.width ~/ 300)
+                                    .toInt(),
+                          ),
+                          itemCount: _list.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ResultSongCard(song: _list[index]);
+                          }),
                     if (snapshot.connectionState == ConnectionState.done &&
                         !_isSearchEnd)
                       Row(

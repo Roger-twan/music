@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'provider/likes_song.dart';
 import 'provider/music_player.dart';
@@ -27,12 +28,18 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
             bodyMedium: TextStyle(color: Colors.grey[400]),
           )),
-      home: const Scaffold(
+      home: Scaffold(
+        appBar: Platform.isIOS
+            ? AppBar(
+                toolbarHeight: -16,
+                backgroundColor: Colors.black,
+              )
+            : null,
         backgroundColor: Colors.black,
-        body: SearchScreen(),
-        bottomNavigationBar: BottomBar(),
-        drawer: Likes(),
-        endDrawer: Settings(),
+        body: const SearchScreen(),
+        bottomNavigationBar: const BottomBar(),
+        drawer: const Likes(),
+        endDrawer: const Settings(),
       ),
     );
   }

@@ -15,25 +15,26 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(6, 20, 6, 0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          const Logo(),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              children: const [
-                SearchBar(),
-                Expanded(child: SearchResult()),
-              ],
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  padding: const EdgeInsets.only(top: 4), child: const Logo()),
+              const SizedBox(width: 10),
+              const Expanded(child: SearchBar()),
+              const SizedBox(width: 4),
+              IconButton(
+                onPressed: () async => {
+                  Scaffold.of(context).openEndDrawer(),
+                },
+                icon: const Icon(Icons.settings),
+                iconSize: 30,
+              ),
+            ],
           ),
-          const SizedBox(width: 10),
-          IconButton(
-              onPressed: () async => {
-                    Scaffold.of(context).openEndDrawer(),
-                  },
-              icon: const Icon(Icons.settings)),
+          const Expanded(child: SearchResult()),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'search_history_list.dart';
 import '../../provider/search_history.dart';
@@ -35,9 +36,9 @@ class Suggestion {
     if (_overlayEntry == null) {
       _overlayEntry = OverlayEntry(builder: (context) {
         return Positioned(
-            top: 59,
+            top: Platform.isIOS ? 101 : 59,
             left: 56,
-            right: 56,
+            right: 58,
             child: Material(
                 child: Container(
               decoration: BoxDecoration(

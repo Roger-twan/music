@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../provider/search_history.dart';
 import '../_common/toast.dart';
@@ -22,6 +23,8 @@ class _SettingsState extends State<Settings> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (Platform.isIOS)
+                SizedBox(height: MediaQuery.of(context).padding.top),
               const Text('Settings',
                   style: TextStyle(
                     fontSize: 24,
@@ -55,7 +58,9 @@ class _SettingsState extends State<Settings> {
                     ],
                   )
                 ],
-              ))
+              )),
+              if (Platform.isIOS)
+                SizedBox(height: MediaQuery.of(context).padding.bottom),
             ],
           ),
         ));
