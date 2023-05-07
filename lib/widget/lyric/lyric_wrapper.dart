@@ -64,13 +64,13 @@ class LyricWrapper extends CustomPainter {
 
       if (y > 0 && y < size.height) {
         TextPainter textPainter = TextPainter(
-          text: TextSpan(
-            text: lyricList[i].lyric,
-            style: lyricStyle,
-          ),
-          textDirection: TextDirection.ltr,
-        );
-        textPainter.layout();
+            text: TextSpan(
+              text: lyricList[i].lyric,
+              style: lyricStyle,
+            ),
+            textDirection: TextDirection.ltr,
+            ellipsis: '·');
+        textPainter.layout(maxWidth: size.width);
 
         final xCenter = (size.width - textPainter.width) / 2;
         final offset = Offset(xCenter, y);

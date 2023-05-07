@@ -1,11 +1,12 @@
 import 'dart:math';
+import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import '../model/songs_model.dart';
 import 'likes_song.dart';
 import 'event_bus.dart';
 import 'preferences.dart';
 
-class MusicPlayer {
+class MusicPlayer extends BaseAudioHandler {
   final _player = AudioPlayer();
   final _likesSong = LikesSong();
   List<SongModel?> _likesSongList = [];
@@ -14,8 +15,8 @@ class MusicPlayer {
   String? _loopMode; // all,one,shuffle
 
   static final MusicPlayer _instance = MusicPlayer._internal();
-  MusicPlayer._internal();
   factory MusicPlayer() => _instance;
+  MusicPlayer._internal();
 
   void init() {
     setLoopMode();
@@ -41,19 +42,47 @@ class MusicPlayer {
       if (state == ProcessingState.buffering) {
         eventBus.fire(PlayEvent(state: 'loading'));
       } else if (state == ProcessingState.ready) {
+        AudioService.position.listen((Duration position) {
+          if (_playingSong != null &&
+              _playingSong?.duration != null &&
+              position.inMilliseconds + 150 >= _playingSong!.duration!) {
+            playNext();
+          }
+          eventBus.fire(PlayEvent(position: position.inMilliseconds));
+        });
         eventBus.fire(PlayEvent(state: 'ready'));
       }
     });
     _player.positionStream.listen((Duration? duration) {
-      if (_playingSong != null &&
-          _playingSong?.duration != null &&
-          duration!.inMilliseconds + 150 >= _playingSong!.duration!) {
-        next();
+      // only be triggered when pause
+      if (duration != null && duration.inSeconds != 0) {
+        playbackState
+            .add(playbackState.value.copyWith(updatePosition: duration));
       }
-      eventBus.fire(PlayEvent(position: duration!.inMilliseconds));
     });
     _player.bufferedPositionStream.listen((Duration? duration) {
       eventBus.fire(PlayEvent(bufferedPosition: duration!.inMilliseconds));
+    });
+    _player.playbackEventStream.listen((PlaybackEvent event) {
+      final playing = _player.playing;
+      playbackState.add(playbackState.value.copyWith(
+        controls: [
+          MediaControl.skipToPrevious,
+          if (playing) MediaControl.pause else MediaControl.play,
+          MediaControl.skipToNext,
+        ],
+        systemActions: const {
+          MediaAction.seek,
+        },
+        processingState: const {
+          ProcessingState.idle: AudioProcessingState.idle,
+          ProcessingState.loading: AudioProcessingState.loading,
+          ProcessingState.buffering: AudioProcessingState.buffering,
+          ProcessingState.ready: AudioProcessingState.ready,
+          ProcessingState.completed: AudioProcessingState.completed,
+        }[_player.processingState]!,
+        playing: playing,
+      ));
     });
   }
 
@@ -70,6 +99,7 @@ class MusicPlayer {
     }
   }
 
+  @override
   Future play([SongModel? song]) async {
     if (song != null) {
       _playingSong = song;
@@ -79,19 +109,41 @@ class MusicPlayer {
           : duration.inMilliseconds;
       _playingSongIndex = _likesSongList
           .indexWhere((SongModel? likedSong) => likedSong?.id == song.id);
+
+      mediaItem.add(MediaItem(
+          id: song.id.toString(),
+          title: song.name,
+          artist: song.artist,
+          artUri: Uri.parse(
+              'https://raw.githubusercontent.com/roger-twan/music/main/lib/assets/logo.png'),
+          duration: Duration(milliseconds: _playingSong!.duration!)));
+
+      playbackState
+          .add(playbackState.value.copyWith(updatePosition: Duration.zero));
     }
+
     _player.play();
   }
 
-  Future pause() async {
-    await _player.pause();
+  @override
+  Future<void> pause() async => _player.pause();
+
+  @override
+  Future<void> seek(Duration position) => _player.seek(position);
+
+  @override
+  Future<void> skipToNext() {
+    playNext();
+    return Future.value(null);
   }
 
-  Future seek(int ms) async {
-    await _player.seek(Duration(milliseconds: ms));
+  @override
+  Future<void> skipToPrevious() {
+    playPrevious();
+    return Future.value(null);
   }
 
-  void next() {
+  void playNext() {
     int nextPlayIndex = 0;
     if (_playingSongIndex == -1) {
       nextPlayIndex = 0;
@@ -116,7 +168,7 @@ class MusicPlayer {
     play(_likesSongList[nextPlayIndex]);
   }
 
-  Future previous() async {
+  Future playPrevious() async {
     int previousPlayIndex = 0;
     if (_playingSongIndex == -1) {
       previousPlayIndex = 0;

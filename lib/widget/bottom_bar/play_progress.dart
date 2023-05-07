@@ -75,8 +75,9 @@ class _PlayProgressState extends State<PlayProgress> {
 
   void onDotDragEnd(DragEndDetails e) {
     setIsDotDragging(false);
-    player
-        .seek(totalDuration * dotProgress ~/ MediaQuery.of(context).size.width);
+    player.seek(Duration(
+        milliseconds:
+            totalDuration * dotProgress ~/ MediaQuery.of(context).size.width));
   }
 
   void setHoverDuration(double dx) {
@@ -131,7 +132,11 @@ class _PlayProgressState extends State<PlayProgress> {
       },
       onExit: (e) => setIsProgressHover(false),
       child: GestureDetector(
-        onTap: () => player.seek(hoverDuration),
+        onTapDown: (TapDownDetails details) {
+          double dx = details.globalPosition.dx;
+          double radio = MediaQuery.of(context).size.width / dx;
+          player.seek(Duration(milliseconds: totalDuration ~/ radio));
+        },
         child: Column(
           children: [
             Container(

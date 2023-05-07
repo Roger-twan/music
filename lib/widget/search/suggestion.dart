@@ -48,17 +48,21 @@ class Suggestion {
                       left: BorderSide(color: Colors.white, width: 0),
                       right: BorderSide(color: Colors.white, width: 0),
                       bottom: BorderSide(color: Colors.white, width: 0))),
-              child: ValueListenableBuilder<List<String>>(
-                  valueListenable: _list,
-                  builder: (BuildContext context, List<String> value,
-                      Widget? child) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SearchHistoryList(list: value),
-                      ],
-                    );
-                  }),
+              child: MediaQuery.removePadding(
+                removeTop: true,
+                context: context,
+                child: ValueListenableBuilder<List<String>>(
+                    valueListenable: _list,
+                    builder: (BuildContext context, List<String> value,
+                        Widget? child) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SearchHistoryList(list: value),
+                        ],
+                      );
+                    }),
+              ),
             )));
       });
 

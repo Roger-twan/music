@@ -69,6 +69,7 @@ class _LikesState extends State<Likes> {
               const SizedBox(height: 20),
               Expanded(
                   child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: list?.length,
                       itemBuilder: (BuildContext context, int index) {
                         return LikedSongCard(song: list![index]!);

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'provider/audio_server.dart';
 import 'provider/likes_song.dart';
 import 'provider/music_player.dart';
 import 'provider/preferences.dart';
@@ -12,7 +13,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences().init();
   await LikesSong().init();
+  AudioServer().init();
   MusicPlayer().init();
+
   runApp(const MyApp());
 }
 

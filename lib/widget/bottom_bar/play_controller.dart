@@ -45,7 +45,7 @@ class _PlayControllerState extends State<PlayController> {
     return Row(
       children: [
         IconButton(
-            onPressed: () => player.previous(),
+            onPressed: () => player.playPrevious(),
             icon: const Icon(Icons.skip_previous)),
         if (playState == 'loading')
           Container(
@@ -63,7 +63,8 @@ class _PlayControllerState extends State<PlayController> {
             iconSize: 40,
           ),
         IconButton(
-            onPressed: () => player.next(), icon: const Icon(Icons.skip_next)),
+            onPressed: () => player.playNext(),
+            icon: const Icon(Icons.skip_next)),
       ],
     );
   }

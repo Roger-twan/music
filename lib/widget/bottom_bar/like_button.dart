@@ -77,7 +77,10 @@ class _LikeButtonState extends State<LikeButton> {
       }
 
       if (mounted) {
-        showToast(context, isAdded ? 'Successfully added' : 'Add failed');
+        showToast(
+            context,
+            curSong!.name +
+                (isAdded ? ' was successfully added' : ' was add failed'));
       }
     } else {
       bool isRemoved = await likesSong.remove(curSong!.id);
@@ -88,7 +91,11 @@ class _LikeButtonState extends State<LikeButton> {
 
       if (mounted) {
         showToast(
-            context, isRemoved ? 'Successfully removed' : 'Remove failed');
+            context,
+            curSong!.name +
+                (isRemoved
+                    ? ' was successfully removed'
+                    : ' was remove failed'));
       }
     }
   }
