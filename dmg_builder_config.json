@@ -1,0 +1,14 @@
+{
+  "title": "Roger Music",
+  "icon": "./build/macos/Build/Products/Release/Roger Music.app/Contents/Resources/AppIcon.icns",
+  "contents": [
+    { "x": 448, "y": 100, "type": "link", "path": "/Applications" },
+    { "x": 192, "y": 100, "type": "file", "path": "./build/macos/Build/Products/Release/Roger Music.app" }
+  ],
+  "window": {
+    "size": {
+      "width": 600,
+      "height": 100
+    }
+  }
+}
