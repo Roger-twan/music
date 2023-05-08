@@ -1,24 +1,20 @@
-<center>
-  <image src="doc/resource/logo.png" with="128" height="128">
-  <h2>Roger Music</h2>
-  A cross-platform music app
-
-  ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRoger-twan%2Fmusic%2Fmain%2Fpubspec.yaml&color=green)
-  ![platform ios](https://img.shields.io/badge/Platform-iOS-blue)
-  ![platform ios](https://img.shields.io/badge/Platform-MacOS-blue)
-  ![flutter](https://img.shields.io/badge/flutter-3.7.7-orange)
-</center>
+<p align="center">
+  <image src="doc/resource/logo.png" with="128" height="128"></p>
+<h3 align="center">Roger Music</h3>
+<p align="center">A cross-platform music app</p>
+<p align="center">
+  <image src="https://img.shields.io/badge/dynamic/yaml?label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRoger-twan%2Fmusic%2Fmain%2Fpubspec.yaml&color=green">
+  <image src="https://img.shields.io/badge/Platform-iOS-blue">
+  <image src="https://img.shields.io/badge/Platform-MacOS-blue">
+  <image src="https://img.shields.io/badge/flutter-3.7.7-orange">
+</p>
 <hr>
 
-## 💻 MacOS Screenshot
-![mac search](/doc/resource/mac-search.png)
-![mac likes](/doc/resource/mac-likes.png)
-![mac lyric](/doc/resource/mac-lyric.png)
-
-## 📱 iOS Screenshot
-![ios search](/doc/resource/ios-search.png)
-![ios likes](/doc/resource/ios-likes.png)
-![sio lyric](/doc/resource/ios-lyric.png)
+## 📸 Screenshot
+Platform|Search|Likes|Lyrics
+|:-:|:-:|:-:|:-:|
+MacOS|![mac search](/doc/resource/mac-search.png)|![mac likes](/doc/resource/mac-likes.png)|![mac lyric](/doc/resource/mac-lyric.png)
+iOS|![ios search](/doc/resource/ios-search.PNG)|![ios likes](/doc/resource/ios-likes.PNG)|![ios lyric](/doc/resource/ios-lyric.PNG)
 
 ## ⚒️ Building & installation
 ### MacOS
@@ -29,7 +25,7 @@ A dmg file named Roger Music will be built in project root directory.
 Click the installer to install.
 ### iOS
 ```
-./build_ipa
+./build_ipa.sh
 ```
 An ipa file named Roger Music will be built in project root directory.  
 
