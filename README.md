@@ -36,6 +36,9 @@ Install:
 ## 📚 Knowledge
 Visit [Build a Cross-Platform Serverless Music App](https://roger.twan.life/Build-a-Cross-Platform-Serverless-Music-App-cf8bc898fce54122b9f936e8c4c10e07) see the project background and tech solution design.
     
-## Bugfix & improvement
-1. hide the likes drawer after tapping the song, and add tap effect.
+## 🐛 Bugfix & improvement
+1. [I] Hide the likes drawer after tapping the song, and add tap effect.
+2. [B] Likes songs are displayed incrrect when song names are too long.
+3. [I] Add a clear button for Search Textfield
+4. [I] Integrate an interestinng API to search screen when search is not triggered.
     
