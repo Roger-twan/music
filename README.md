@@ -35,3 +35,7 @@ Install:
 
 ## 📚 Knowledge
 Visit [Build a Cross-Platform Serverless Music App](https://roger.twan.life/Build-a-Cross-Platform-Serverless-Music-App-cf8bc898fce54122b9f936e8c4c10e07) see the project background and tech solution design.
+    
+## Bugfix & improvement
+1. hide the likes drawer after tapping the song, and add tap effect.
+    
