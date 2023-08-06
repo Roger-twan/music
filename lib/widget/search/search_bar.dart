@@ -70,8 +70,7 @@ class _SearchBarState extends State<SearchBar> {
               borderSide: BorderSide(color: Colors.white, width: 0),
               borderRadius: BorderRadius.zero),
           isDense: true,
-          contentPadding:
-              const EdgeInsets.fromLTRB(10, 14, 40, 14),
+          contentPadding: const EdgeInsets.fromLTRB(10, 14, 40, 14),
           filled: true,
           fillColor:
               searchFieldFocus.hasFocus ? Colors.grey[900] : Colors.transparent,
@@ -90,13 +89,14 @@ class _SearchBarState extends State<SearchBar> {
         top: 10,
         right: 10,
         child: searchWord.isEmpty
-              ? Container()
-              : GestureDetector(
-                  child: const Icon(Icons.cancel),
-                  onTap: () {
-                    searchFieldController.text = '';
-                    setSearchWord('');
-                  }),)
+            ? Container()
+            : GestureDetector(
+                child: const Icon(Icons.cancel),
+                onTap: () {
+                  searchFieldController.text = '';
+                  setSearchWord('');
+                }),
+      )
     ]);
   }
 }

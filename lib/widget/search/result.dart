@@ -86,13 +86,11 @@ class _SearchResultState extends State<SearchResult> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.none) {
                     return Center(
-                      child: TextAnimator(
-                        'ROGER MUSIC',
-                        atRestEffect: WidgetRestingEffects.wave(),
-                        style: const TextStyle(
-                          fontSize: 40,
-                        )
-                      ),
+                      child: TextAnimator('ROGER MUSIC',
+                          atRestEffect: WidgetRestingEffects.wave(),
+                          style: const TextStyle(
+                            fontSize: 40,
+                          )),
                     );
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
