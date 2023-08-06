@@ -12,27 +12,31 @@ class LikedSongCard extends StatefulWidget {
 }
 
 class _LikedSongCardState extends State<LikedSongCard> {
-  bool isCardHover = false;
+  bool isCardActive = false;
 
-  void setIsCardHover(bool value) {
+  void setIsCardActive(bool value) {
     setState(() {
-      isCardHover = value;
+      isCardActive = value;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => MusicPlayer().play(widget.song),
+      onTap: () {
+        setIsCardActive(true);
+        Navigator.pop(context);
+        MusicPlayer().play(widget.song);
+      },
       child: MouseRegion(
         cursor: MaterialStateMouseCursor.clickable,
-        onEnter: (e) => setIsCardHover(true),
-        onExit: (e) => setIsCardHover(false),
+        onEnter: (e) => setIsCardActive(true),
+        onExit: (e) => setIsCardActive(false),
         child: Stack(children: [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             decoration: BoxDecoration(
-                color: isCardHover ? Colors.black : Colors.transparent,
+                color: isCardActive ? Colors.black : Colors.transparent,
                 border: const Border(
                     bottom: BorderSide(color: Colors.grey, width: 0))),
             child: Column(
@@ -40,13 +44,15 @@ class _LikedSongCardState extends State<LikedSongCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.song.name,
-                            style: const TextStyle(color: Colors.white)),
-                        Text(widget.song.artist)
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.song.name,
+                              style: const TextStyle(color: Colors.white)),
+                          Text(widget.song.artist)
+                        ],
+                      ),
                     ),
                     Text(TimeConverter.formatMilliseconds(
                         widget.song.duration!)),

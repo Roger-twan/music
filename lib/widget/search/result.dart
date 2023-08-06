@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import '../../model/songs_model.dart';
 import '../../provider/dio_client.dart';
 import '../../provider/event_bus.dart';
@@ -83,6 +84,15 @@ class _SearchResultState extends State<SearchResult> {
             child: FutureBuilder<SongListModel>(
                 future: _searchSongs,
                 builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return Center(
+                      child: TextAnimator('ROGER MUSIC',
+                          atRestEffect: WidgetRestingEffects.wave(),
+                          style: const TextStyle(
+                            fontSize: 40,
+                          )),
+                    );
+                  }
                   if (snapshot.connectionState == ConnectionState.done) {
                     List<SongModel?> data = snapshot.data!.result;
                     for (var element in data) {
