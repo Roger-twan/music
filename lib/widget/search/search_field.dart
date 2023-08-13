@@ -3,14 +3,14 @@ import '../../provider/event_bus.dart';
 import '../../provider/search_history.dart';
 import 'suggestion.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
+class SearchField extends StatefulWidget {
+  const SearchField({super.key});
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<SearchField> createState() => _SearchFieldState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchFieldState extends State<SearchField> {
   final FocusNode searchFieldFocus = FocusNode();
   final TextEditingController searchFieldController = TextEditingController();
   bool isSearchFieldFocus = false;

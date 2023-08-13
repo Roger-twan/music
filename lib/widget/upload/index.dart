@@ -90,10 +90,10 @@ class _UploadDrawerState extends State<UploadDrawer> {
                                           child: Container(
                                             color:
                                                 Colors.black.withOpacity(0.3),
-                                            child: Row(
+                                            child: const Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
-                                              children: const [
+                                              children: [
                                                 CircularProgressIndicator(
                                                     color: Colors.grey),
                                               ],

@@ -58,8 +58,8 @@ class _BottomBarState extends State<BottomBar> {
                         iconSize: 22,
                       ),
                       const PlayController(),
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           LikeButton(),
                           LoopShuffle(),
                         ],

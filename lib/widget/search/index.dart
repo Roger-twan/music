@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../logo/index.dart';
-import 'search_bar.dart';
+import 'search_field.dart';
 import 'result.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -23,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Container(
                   padding: const EdgeInsets.only(top: 4), child: const Logo()),
               const SizedBox(width: 10),
-              const Expanded(child: SearchBar()),
+              const Expanded(child: SearchField()),
               const SizedBox(width: 4),
               IconButton(
                 onPressed: () async => {
