@@ -72,9 +72,9 @@ class _SettingsState extends State<Settings> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Clear all cache below?'),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
+              children: <Widget>[
                 Text('- Search history'),
               ],
             ),

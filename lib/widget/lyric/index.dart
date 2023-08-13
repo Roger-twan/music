@@ -77,10 +77,10 @@ class _LyricScreenState extends State<LyricScreen> {
                           String lyr = snapshot.data?.lyric ?? '';
                           MusicPlayer().setLyric(lyr);
                           if (lyr.isEmpty) {
-                            return Row(
+                            return const Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [Text('No lyric')]);
+                                children: [Text('No lyric')]);
                           } else {
                             return CustomPaint(
                               painter: LyricWrapper(lyr, baseFontSize),
