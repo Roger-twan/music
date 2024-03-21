@@ -1,7 +1,7 @@
 <p align="center">
   <image src="doc/resource/logo.png" with="128" height="128"></p>
 <h3 align="center">Roger Music</h3>
-<p align="center">A cross-platform music app</p>
+<p align="center">A cross-platform music player app</p>
 <p align="center">
   <image src="https://img.shields.io/badge/dynamic/yaml?label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRoger-twan%2Fmusic%2Fmain%2Fpubspec.yaml&color=green">
   <image src="https://img.shields.io/badge/Platform-iOS-blue">
